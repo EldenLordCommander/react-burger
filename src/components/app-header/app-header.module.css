@@ -1,0 +1,37 @@
+.headerMenu {
+    font-size: 20px;
+    height: 100px;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+}
+
+.navigation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.constructorBlock{
+    display: flex;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.orderListBlock{
+    display: flex;
+    justify-content: center;
+    margin-right: 12rem;
+    margin-left: 1rem;
+}
+
+.personalBlock{
+    display: flex;
+    justify-content: center;
+    margin-left: 14rem;
+}

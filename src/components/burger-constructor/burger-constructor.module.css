@@ -1,0 +1,20 @@
+.constructorItems{
+    overflow: auto;
+    scroll-behavior: smooth;
+    max-height: 400px;
+}
+.constructorItems::-webkit-scrollbar {
+    width: 5px;
+}
+.constructorItems::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+  }
+.constructorItems::-webkit-scrollbar-thumb {
+    background-color: #7e7eb4;
+  }
+
+.constructorIngregient{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
