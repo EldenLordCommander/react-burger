@@ -1,8 +1,8 @@
 .ingredient{
     margin-top: 16px;
     margin-bottom: 16px;
-    width: 250px;
-    margin-left: 16px;
+    width: 300px;
+    margin-left: 8px;
     margin-right: 8px;
     flex-direction: column;
     display: inline-block; 
@@ -12,7 +12,7 @@
 
 .mainIngredientList{
     max-height: 700px;
-    max-width: 600px;
+    max-width: 650px;
     overflow: auto;
     margin-top: 40px;
 }
@@ -41,4 +41,24 @@
     position: relative;
     top: 0;
     right: 0;
+}
+
+
+.ingredientsList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.leftColumn {
+    align-items: center;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-right: 20px;
+    width: 650px;
+
+}
+
+.title{
+    text-align: left;
 }

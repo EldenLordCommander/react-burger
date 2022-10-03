@@ -1,24 +1,22 @@
 import React from 'react';
 import constructorStyles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import { ingredientPropTypes } from '../../utils/types';
+
 
 function BurgerConstructor({ data }) {
     const firstIngredient = data[0];
-    const lastIngredient = data[data.length - 1];
     const leftIngredients = data.slice(1, data.length - 1);
 
     return (
-        <section>
+        <section className={constructorStyles.rightColumn}>
             <section>
-                <div style={{ marginTop: '16px', marginBottom: '16px' }} className={constructorStyles.constructorIngregient}>
-                    <div style={{ opacity: 0 }}>
-                        <DragIcon type="primary" />
-                    </div>
+                <div className={constructorStyles.borderItems}>
                     <ConstructorElement
                         type='top'
                         isLocked={true}
-                        text={firstIngredient.name}
+                        text={firstIngredient.name + ' (верх)'}
                         price={firstIngredient.price}
                         thumbnail={firstIngredient.image_mobile}
                     />
@@ -26,10 +24,9 @@ function BurgerConstructor({ data }) {
             </section>
             <section className={constructorStyles.constructorItems}>
                 {
-                    leftIngredients.map((item, key) =>
+                    leftIngredients.map((item) =>
                     (
-
-                        <div className={constructorStyles.constructorIngregient} style={{ marginTop: '16px', marginBottom: '16px' }} key={key}>
+                        <div className={constructorStyles.constructorIngregient} key={item._id}>
                             <div>
                                 <DragIcon type="primary" />
                             </div>
@@ -44,18 +41,25 @@ function BurgerConstructor({ data }) {
                 }
             </section>
             <section>
-                <div style={{ marginTop: '16px', marginBottom: '16px' }} className={constructorStyles.constructorIngregient}>
-                    <div style={{ opacity: 0 }}>
-                        <DragIcon type="primary" />
-                    </div>
+                <div className={constructorStyles.borderItems}>
+
                     <ConstructorElement
                         type='bottom'
                         isLocked={true}
-                        text={lastIngredient.name}
-                        price={lastIngredient.price}
-                        thumbnail={lastIngredient.image_mobile}
+                        text={firstIngredient.name + ' (низ)'}
+                        price={firstIngredient.price}
+                        thumbnail={firstIngredient.image_mobile}
                     />
                 </div>
+            </section>
+            <section className={constructorStyles.checkout}>
+                <div className={constructorStyles.price}>
+                    <span className="text text_type_main-large">0</span>
+                    <CurrencyIcon type="primary" />
+                </div>
+                <Button type="primary" size="large" htmlType={'button'}>
+                    Оформить заказ
+                </Button>
             </section>
 
         </section >
@@ -63,19 +67,15 @@ function BurgerConstructor({ data }) {
     )
 }
 
-BurgerConstructor.propTypes ={
-    data : PropTypes.arrayOf(PropTypes.shape({
-            name : PropTypes.string.isRequired,   
-            image_mobile : PropTypes.string.isRequired,   
-            price : PropTypes.number.isRequired   
-        }).isRequired
-    )
-  }
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+}
 
 ConstructorElement.propTypes = {
-    text : PropTypes.string.isRequired,
-    price : PropTypes.number.isRequired,
-    thumbnail : PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    thumbnail: PropTypes.string.isRequired
 }
 
 export default BurgerConstructor;
