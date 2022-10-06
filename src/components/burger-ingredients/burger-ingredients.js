@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ingredientStyle from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
 import TabHeader from '../tab-header/tab-header';
+import IngredientDetails from '../ingredient-details/ingredient-details.js';
+import Modal from '../modal/modal';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/types';
 
 function BurgerIngredients({ data }) {
+    const[openModal, setModal]=useState(false);
+    const[selectedIngredient, setIngredient] = useState();
+
+    const ingredientClick = (e) => {
+        setModal(true);
+        setIngredient(e);
+    }
 
     return (
         <div className={ingredientStyle.leftColumn}>
@@ -23,7 +32,7 @@ function BurgerIngredients({ data }) {
                                 }
                             })
                                 .map((item) => (
-                                    <div className={ingredientStyle.ingredient} key={item._id}>
+                                    <div className={ingredientStyle.ingredient} key={item._id} onClick={(e) =>ingredientClick(item)}>
                                         <Counter count={1} size="default" />
                                         <img src={item.image} className={ingredientStyle.priceBlock}></img>
                                         <p className="text text_type_main-default">{item.price}
@@ -44,7 +53,7 @@ function BurgerIngredients({ data }) {
                                 }
                             })
                                 .map((item) => (
-                                    <div className={ingredientStyle.ingredient} key={item._id}>
+                                    <div className={ingredientStyle.ingredient} key={item._id} onClick={(e) =>ingredientClick(item)}>
                                         <Counter count={1} size="default" />
                                         <img src={item.image} className={ingredientStyle.priceBlock}></img>
                                         <p className="text text_type_main-default">{item.price}
@@ -65,7 +74,7 @@ function BurgerIngredients({ data }) {
                                 }
                             })
                                 .map((item) => (
-                                    <div className={ingredientStyle.ingredient} key={item._id}>
+                                    <div className={ingredientStyle.ingredient} key={item._id} onClick={(e) =>ingredientClick(item)}>
                                         <Counter count={1} size="default" />
                                         <img src={item.image} className={ingredientStyle.priceBlock}></img>
                                         <p className="text text_type_main-default">{item.price}
@@ -77,6 +86,11 @@ function BurgerIngredients({ data }) {
                                 )
                         }
                     </div>
+                    {openModal && selectedIngredient &&
+                        <Modal setModalActive={setModal} isOrder={false}>
+                            <IngredientDetails ingredient={selectedIngredient}/>
+                        </Modal>
+                    }
 
                 </section>
             </div>
