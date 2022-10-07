@@ -7,9 +7,16 @@
 
 }
 
+.imageBlock{
+    margin-top: 16px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
 .itemTitle{
     margin-top: 16px;
     margin-bottom: 32px;
+    text-align: center;
 }
 
 .contentItem{

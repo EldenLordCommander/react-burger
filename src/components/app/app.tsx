@@ -16,7 +16,7 @@ function App() {
       fetch(url)
          .then((response) => {
             if (!response.ok) {
-              throw new Error();
+              throw new Error('Ответ от сервера вернул ошибку');
             }
             return response.json();
           })
@@ -37,7 +37,6 @@ function App() {
                <BurgerConstructor data={state.data} />
             </main >
          }
-         <div id="modal"></div>
       </div >
    );
 }

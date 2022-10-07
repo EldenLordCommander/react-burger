@@ -5,7 +5,7 @@ import checkImage from '../../images/done.png'
 function OrderDetails() {
 
     return (
-        <div>
+        <div className={orderStyle.orderBlock}>
             <p className={`${orderStyle.itemTitle} text text_type_digits-large`}>034536</p>
             <div className={`text text_type_main-default`}>
                 <p className="text text_type_main-default">
@@ -13,7 +13,8 @@ function OrderDetails() {
                 </p>
             </div>
             <div className={`${orderStyle.imageBlock} text text_type_main-default`}>
-            <img src={checkImage} className={orderStyle.priceBlock}></img>
+            <img src={checkImage} className={orderStyle.priceBlock} alt='Заказ принят'></img>
+
             </div>
             <div className={`text text_type_main-default`}>
                 <p className="text text_type_main-default">

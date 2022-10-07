@@ -31,7 +31,12 @@ function BurgerConstructor({ data }) {
             </section>
             <section className={constructorStyles.constructorItems}>
                 {
-                    leftIngredients.map((item) =>
+                    leftIngredients.filter((item) => {
+                        if (item.type !== 'bun') {
+                            return item;
+                        }
+                    })
+                    .map((item) =>
                     (
                         <div className={constructorStyles.constructorIngregient} key={item._id}>
                             <div>
@@ -61,7 +66,7 @@ function BurgerConstructor({ data }) {
             </section>
             <section className={constructorStyles.checkout}>
                 <div className={constructorStyles.price}>
-                    <span className="text text_type_main-large">0</span>
+                    <span className="text text_type_digits-medium">610</span>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button type="primary" size="large" htmlType={'button'} onClick={orderClick}>
@@ -69,7 +74,7 @@ function BurgerConstructor({ data }) {
                 </Button>
             </section>
             {openModal &&
-                <Modal setModalActive={setModal} isOrder={true}>
+                <Modal setModalActive={setModal}>
                     <OrderDetails  />
                 </Modal>
             }

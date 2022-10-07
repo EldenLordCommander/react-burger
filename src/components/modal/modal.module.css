@@ -11,6 +11,7 @@
   /* width: 40%;
     height: 50%; */
   width: 600px;
+  
 }
 
 .modalHeader {
@@ -20,6 +21,11 @@
   margin-top: 40px;
   margin-left: 40px;
   margin-right: 40px;
+
+}
+
+.modalHeaderHidden {
+  visibility: hidden;
 
 }
 

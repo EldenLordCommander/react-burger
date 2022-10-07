@@ -7,7 +7,9 @@ function IngredientDetails({ ingredient }) {
     //console.log(ingreedient);
     return (
         <div>
-            <img src={ingredient.image_large} className={detailsStyle.priceBlock}></img>
+            <div className={detailsStyle.imageBlock} >
+                <img src={ingredient.image_large} alt={ingredient.name}></img>
+            </div>
             <p className={`${detailsStyle.itemTitle} text text_type_main-medium`}>{ingredient.name}</p>
             <div className={detailsStyle.burgerContent}>
                 <div className={`${detailsStyle.contentItem} text text_type_main-default`}>
