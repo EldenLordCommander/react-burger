@@ -1,0 +1,45 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: #1b1b24;
+  overflow: auto;
+  border-radius: 20px;
+  outline: none;
+  /* width: 40%;
+    height: 50%; */
+  width: 600px;
+  
+}
+
+.modalHeader {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
+
+}
+
+.modalHeaderHidden {
+  visibility: hidden;
+
+}
+
+.title {
+  text-align: left;
+}
+
+.closeButton {
+  /* text-align: right;
+  justify-content: center; */
+  cursor: pointer;
+  position:absolute;
+  top:0;
+  right:0;
+  margin-top: 40px;
+  margin-right: 40px;
+}

@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import constructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details.js';
 
 
 function BurgerConstructor({ data }) {
     const firstIngredient = data[0];
     const leftIngredients = data.slice(1, data.length - 1);
+    const [openModal, setModal] = useState(false);
+
+    const orderClick = () => {
+        setModal(true);
+    }
 
     return (
         <section className={constructorStyles.rightColumn}>
@@ -24,7 +31,12 @@ function BurgerConstructor({ data }) {
             </section>
             <section className={constructorStyles.constructorItems}>
                 {
-                    leftIngredients.map((item) =>
+                    leftIngredients.filter((item) => {
+                        if (item.type !== 'bun') {
+                            return item;
+                        }
+                    })
+                    .map((item) =>
                     (
                         <div className={constructorStyles.constructorIngregient} key={item._id}>
                             <div>
@@ -54,14 +66,18 @@ function BurgerConstructor({ data }) {
             </section>
             <section className={constructorStyles.checkout}>
                 <div className={constructorStyles.price}>
-                    <span className="text text_type_main-large">0</span>
+                    <span className="text text_type_digits-medium">610</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button type="primary" size="large" htmlType={'button'}>
+                <Button type="primary" size="large" htmlType={'button'} onClick={orderClick}>
                     Оформить заказ
                 </Button>
             </section>
-
+            {openModal &&
+                <Modal setModalActive={setModal}>
+                    <OrderDetails  />
+                </Modal>
+            }
         </section >
 
     )

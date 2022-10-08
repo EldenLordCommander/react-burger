@@ -1,0 +1,27 @@
+.burgerContent {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* text-align: center; */
+    /* vertical-align: middle; */
+
+}
+
+.imageBlock{
+    margin-top: 16px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.itemTitle{
+    margin-top: 16px;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.contentItem{
+    color: #756ea0;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 60px;
+}
