@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ingredientStyle from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
 import TabHeader from '../tab-header/tab-header';
@@ -8,7 +8,11 @@ import Modal from '../modal/modal';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/types';
 
-function BurgerIngredients({ data }) {
+import { IngredientContext } from '../app/app';
+
+function BurgerIngredients() {
+    const data = useContext(IngredientContext);
+
     const[openModal, setModal]=useState(false);
     const[selectedIngredient, setIngredient] = useState();
 
@@ -16,7 +20,7 @@ function BurgerIngredients({ data }) {
         setModal(true);
         setIngredient(e);
     }
-
+    
     return (
         <div className={ingredientStyle.leftColumn}>
             <h1 className={`${ingredientStyle.title} text text_type_main-large`} >Соберите бургер</h1>
@@ -98,8 +102,13 @@ function BurgerIngredients({ data }) {
     )
 }
 
+// BurgerIngredients.propTypes = {
+//     data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+// }
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+    IngredientContext: PropTypes.shape({
+        data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+    })
 }
 
 export default BurgerIngredients;
