@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details.js';
+import { getOrderId } from '../../utils/burger-api.js'
 
-import { IngredientContext } from '../app/app';
+import { IngredientContext } from '../../services/burger-context.js'
 
 const OrderContext = React.createContext(null);
 
@@ -16,70 +17,55 @@ function BurgerConstructor() {
     const firstIngredient = data[0];
     const leftIngredients = data.slice(1, data.length - 1);
     const [openModal, setModal] = useState(false);
-    const url = 'https://norma.nomoreparties.space/api/orders';
-    const [clickedIngredients, setIngredients] = useState([firstIngredient._id]);
+
+    const [clickedIngredients, setIngredients] = useState([]);
 
     const initialPriceState = { price: firstIngredient.price * 2 };
-    //const [price, setPrice] = useState(null);
     const [priceState, priceDispatcher] = useReducer(reducer, initialPriceState);
 
     const [orderData, setOrder] = useState({
         name: '',
         order: {},
-        success:false
+        success: false
     });
 
     const orderClick = () => {
-        getOrderId();
-        setModal(true);
-        console.log(clickedIngredients);
-        
+        getOrderId([firstIngredient._id, ...clickedIngredients, firstIngredient._id]).then((result) => {
+            setOrder({ name: result.name, order: result.order, success: result.success });
+            if(result.success)
+            {
+                setModal(true);
+            }
+            else
+            {
+                alert('Ошибка получения номера заказа!');
+            }
+        });
     }
 
-    const getOrderId = () => {
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-            }, 
-            body: JSON.stringify({
-                //ingredients : data.map((ingredient)=>ingredient._id)})
-                ingredients : clickedIngredients })
-            })
-           .then((response) => {
-              if (!response.ok) {
-                 throw new Error('Ответ от сервера вернул ошибку');
-              }
-              return response.json();
-           })
-           .then(
-              result => setOrder({ name: result.name, order: result.order, success: result.success })
-           )
-           .catch(error => alert("Ошибка запроса: " + error))
-     }
 
-     const itemClickTest = (e) =>{
-        priceDispatcher({type: 'addIngredient', price: e.price});
+    const itemClickTest = (e) => {
+        priceDispatcher({ type: 'addIngredient', price: e.price });
         setIngredients([...clickedIngredients, e._id]);
     }
 
-     function reducer(state, action) {  
+    function reducer(state, action) {
         switch (action.type) {
-          case "addIngredient":
-            return { 
-                price: state.price + action.price 
-            };
-          case "deleteIngredient":
-            return { 
-                price: state.price - action.price 
-            };
-          default:
-            throw new Error(`Wrong type of action: ${action.type}`);
+            case "addIngredient":
+                return {
+                    price: state.price + action.price
+                };
+            case "deleteIngredient":
+                return {
+                    price: state.price - action.price
+                };
+            default:
+                throw new Error(`Wrong type of action: ${action.type}`);
         }
-      }
+    }
 
 
-     return (
+    return (
         <section className={constructorStyles.rightColumn}>
             <section>
                 <div className={constructorStyles.borderItems}>
@@ -94,26 +80,26 @@ function BurgerConstructor() {
             </section>
             <section className={constructorStyles.constructorItems}>
                 {
-                    
+
                     leftIngredients.filter((item) => {
                         if (item.type !== 'bun') {
                             return item;
                         }
                     })
-                    .map((item) =>
-                    (
-                        <div className={constructorStyles.constructorIngregient} key={item._id} onClick={()=>itemClickTest(item)}>
-                            <div>
-                                <DragIcon type="primary" />
-                            </div>
-                            <ConstructorElement
+                        .map((item) =>
+                        (
+                            <div className={constructorStyles.constructorIngregient} key={item._id} onClick={() => itemClickTest(item)}>
+                                <div>
+                                    <DragIcon type="primary" />
+                                </div>
+                                <ConstructorElement
 
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image_mobile}
-                            />
-                        </div>
-                    ))
+                                    text={item.name}
+                                    price={item.price}
+                                    thumbnail={item.image_mobile}
+                                />
+                            </div>
+                        ))
                 }
             </section>
             <section>
@@ -147,15 +133,6 @@ function BurgerConstructor() {
     )
 }
 
-
-// BurgerConstructor.propTypes = {
-//     data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-// }
-BurgerConstructor.propTypes = {
-    IngredientContext: PropTypes.shape({
-        data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-    })
-}
 
 ConstructorElement.propTypes = {
     text: PropTypes.string.isRequired,

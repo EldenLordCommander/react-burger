@@ -8,7 +8,7 @@ import Modal from '../modal/modal';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/types';
 
-import { IngredientContext } from '../app/app';
+import { IngredientContext } from '../../services/burger-context.js'
 
 function BurgerIngredients() {
     const data = useContext(IngredientContext);
@@ -102,13 +102,5 @@ function BurgerIngredients() {
     )
 }
 
-// BurgerIngredients.propTypes = {
-//     data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-// }
-BurgerIngredients.propTypes = {
-    IngredientContext: PropTypes.shape({
-        data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-    })
-}
 
 export default BurgerIngredients;
