@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import orderStyle from './order-details.module.css';
 import checkImage from '../../images/done.png'
+import PropTypes from 'prop-types';
 
-function OrderDetails() {
+function OrderDetails({ order }) {
 
     return (
         <div className={orderStyle.orderBlock}>
-            <p className={`${orderStyle.itemTitle} text text_type_digits-large`}>034536</p>
+            <p className={`${orderStyle.itemTitle} text text_type_digits-large`}>{order.number}</p>
             <div className={`text text_type_main-default`}>
                 <p className="text text_type_main-default">
                     Идентификатор заказа
@@ -29,5 +30,16 @@ function OrderDetails() {
         </div>
     )
 }
+
+OrderDetails.propTypes = {
+    order: PropTypes.shape({
+        number: PropTypes.number,
+    })
+}
+
+
+// BurgerIngredients.propTypes = {
+//     data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+// }
 
 export default OrderDetails;

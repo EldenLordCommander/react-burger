@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
 
 function IngredientDetails({ ingredient }) {
-    //console.log(ingreedient);
     return (
         <div>
             <div className={detailsStyle.imageBlock} >
