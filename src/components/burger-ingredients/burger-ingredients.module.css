@@ -63,3 +63,8 @@
 .title{
     text-align: left;
 }
+
+
+.tabDiv{
+    display: flex;
+}

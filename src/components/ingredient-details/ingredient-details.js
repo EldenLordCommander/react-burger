@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import detailsStyle from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
+import { useDispatch, useSelector } from 'react-redux';
 
-function IngredientDetails({ ingredient }) {
+function IngredientDetails({ item }) {
+
+    //const ingredient = useSelector((store) => store.ingredient.modalItem);
+    const ingredient = item;
+    
     return (
         <div>
             <div className={detailsStyle.imageBlock} >
@@ -41,7 +46,7 @@ function IngredientDetails({ ingredient }) {
 }
 
 IngredientDetails.propTypes = {
-    ingredient: PropTypes.oneOfType([ingredientPropTypes]).isRequired,
+    item: PropTypes.oneOfType([ingredientPropTypes]).isRequired,
 }
 
 export default IngredientDetails;

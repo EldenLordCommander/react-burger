@@ -1,0 +1,2 @@
+export const GET_MODAL_ITEM = 'GET_ITEM_MODAL';
+export const DELETE_MODAL_ITEM = 'DELETE_MODAL_ITEM';

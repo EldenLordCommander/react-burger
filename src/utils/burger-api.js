@@ -3,14 +3,16 @@ const BASE_API_URL = 'https://norma.nomoreparties.space/api';
 export const INGREDIENTS_URL = `${BASE_API_URL}/ingredients`;
 export const ORDERS_URL = `${BASE_API_URL}/orders`;
 
+export function checkResponse(response) {
+    if (!response.ok) {
+        throw new Error('Ответ от сервера вернул ошибку');
+    }
+    return response.json();
+}
+
 export const getIngredients = () => {
     return fetch(INGREDIENTS_URL)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Ответ от сервера вернул ошибку');
-            }
-            return response.json();
-        })
+        .then(checkResponse)
         .then((result) => {
             if (result.success) {
                 return result.data
@@ -33,15 +35,10 @@ export const getOrderId = (clickedIngredients) => {
             ingredients: clickedIngredients
         })
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Ответ от сервера вернул ошибку');
-            }
-            return response.json();
-        })
+        .then(checkResponse)
         .then((result) => {
-                return result;
-            }
+            return result;
+        }
         )
         .catch(error => alert("Ошибка запроса: " + error))
 }
