@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
 import orderStyle from './order-details.module.css';
 import checkImage from '../../images/done.png'
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function OrderDetails() {
 

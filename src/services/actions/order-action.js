@@ -17,9 +17,7 @@ export function getOrder(clickedIngredients) {
                     data: res
                 })
             } else {
-                dispatch({
-                    type: GET_ORDER_FAILED
-                })
+                throw new Error(res.errorMessage)
             }
         }).catch(err => {
             dispatch({

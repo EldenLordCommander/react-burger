@@ -1,19 +1,13 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ingredientStyle from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
 import TabHeader from '../tab-header/tab-header';
 import IngredientDetails from '../ingredient-details/ingredient-details.js';
 import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useDrag } from 'react-dnd';
 import IngredientItem from '../ingredient-item/ingredient-item.js';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropTypes } from '../../utils/types';
-
-import { IngredientContext } from '../../services/burger-context.js'
-//import { GET_MODAL_ITEM } from '../../services/actions/ingredients-actions';
 import { GET_MODAL_ITEM } from '../../services/actions/modal-actions';
 
 function BurgerIngredients() {
@@ -33,9 +27,9 @@ function BurgerIngredients() {
 
     const handlerScroll = (tab, current) => {
         setCurrent(current);
+        
         tab.current.scrollIntoView({ block: "start", behavior: "smooth" });
     };
-
 
     useEffect(() => {
         if (mainIngredientList.current) {
@@ -56,7 +50,6 @@ function BurgerIngredients() {
 
 
     const ingredientClick = (item) => {
-        //console.log(1);
         setModal(true);
         setIngredient(item);
         dispatch({ type: GET_MODAL_ITEM, item })

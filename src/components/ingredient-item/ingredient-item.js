@@ -1,9 +1,7 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientStyle from './ingredient-item.module.css';
-import React, { useState, useContext, useRef, useEffect } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details.js';
-import Modal from '../modal/modal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { ingredientPropTypes } from '../../utils/types';
@@ -11,15 +9,11 @@ import { ingredientPropTypes } from '../../utils/types';
 
 export default function IngredientItem({ item }) {
 
-    const data = useSelector((store) => store.ingredient.data);
-
     const counter = useSelector((store) => item.type==='bun' 
         ? store.burgerConstructor.dataConstructor.bun
             .filter((e)=>e.item._id===item._id).length 
         : store.burgerConstructor.dataConstructor.components
             .filter((e)=>e.item._id===item._id).length);
-
-    //const counter=0;
 
     const [{ opacity }, dndRef] = useDrag({
         type: 'ingredients',

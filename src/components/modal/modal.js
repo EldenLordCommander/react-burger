@@ -1,12 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import ReactDOM from "react-dom";
 import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/types';
 import { useDispatch } from 'react-redux';
-//import { DELETE_MODAL_ITEM, DELETE_ORDER_ITEM } from '../../services/actions/ingredients-actions';
 import { DELETE_MODAL_ITEM } from '../../services/actions/modal-actions';
 import { DELETE_ORDER_ITEM } from '../../services/actions/order-action';
 

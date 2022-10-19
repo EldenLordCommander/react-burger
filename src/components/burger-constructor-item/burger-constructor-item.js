@@ -92,10 +92,5 @@ BurgerConstructorItem.propTypes = {
     
 };
 
-ConstructorElement.propTypes = {
-    text: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    thumbnail: PropTypes.string.isRequired
-}
 
 export default BurgerConstructorItem;

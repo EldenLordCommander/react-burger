@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect } from 'react';
 import appStyles from './app.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import AppHeader from '../app-header/app-header.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { getIngredients } from '../../utils/burger-api.js'
-import { IngredientContext } from '../../services/burger-context.js'
 import { getData } from '../../services/actions/ingredients-actions';
 
 import { DndProvider } from "react-dnd";
@@ -23,7 +21,6 @@ function App() {
       dispatch(getData())
    }, [dispatch])
 
-   //console.log(data);
 
    return (
 
