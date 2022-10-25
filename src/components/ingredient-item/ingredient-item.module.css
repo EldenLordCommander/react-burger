@@ -1,0 +1,17 @@
+.ingredient{
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: 300px;
+    margin-left: 8px;
+    margin-right: 8px;
+    flex-direction: column;
+    display: inline-block; 
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.priceBlock{
+    margin-top: 4px;
+    margin-bottom: 4px;
+}

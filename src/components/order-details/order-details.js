@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
 import orderStyle from './order-details.module.css';
 import checkImage from '../../images/done.png'
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-function OrderDetails({ order }) {
+function OrderDetails() {
 
+    const newOrder = useSelector(
+        (store) => store.order.order.order);
+    
     return (
         <div className={orderStyle.orderBlock}>
-            <p className={`${orderStyle.itemTitle} text text_type_digits-large`}>{order.number}</p>
+            <p className={`${orderStyle.itemTitle} text text_type_digits-large`}>{newOrder.number}</p>
             <div className={`text text_type_main-default`}>
                 <p className="text text_type_main-default">
                     Идентификатор заказа
@@ -31,15 +33,5 @@ function OrderDetails({ order }) {
     )
 }
 
-OrderDetails.propTypes = {
-    order: PropTypes.shape({
-        number: PropTypes.number,
-    })
-}
-
-
-// BurgerIngredients.propTypes = {
-//     data: PropTypes.arrayOf(ingredientPropTypes).isRequired,
-// }
 
 export default OrderDetails;

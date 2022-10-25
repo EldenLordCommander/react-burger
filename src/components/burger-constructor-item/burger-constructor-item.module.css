@@ -1,0 +1,8 @@
+.constructorIngregient{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
