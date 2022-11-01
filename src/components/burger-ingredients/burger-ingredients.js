@@ -50,8 +50,8 @@ function BurgerIngredients() {
 
 
     const ingredientClick = (item) => {
-        setModal(true);
-        setIngredient(item);
+        //setModal(true);
+        //setIngredient(item);
         dispatch({ type: GET_MODAL_ITEM, item })
     }
 
@@ -119,11 +119,11 @@ function BurgerIngredients() {
                                 )
                         }
                     </div>
-                    {openModal && selectedIngredient &&
+                    {/* {openModal && selectedIngredient &&
                         <Modal setModalActive={setModal} title={'Детали ингридиента'} id={selectedIngredient._id}>
                             <IngredientDetails item={selectedIngredient} />
                         </Modal>
-                    }
+                    } */}
                 </section>
             </div>
         </div>

@@ -7,23 +7,31 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { DELETE_MODAL_ITEM } from '../../services/actions/modal-actions';
 import { DELETE_ORDER_ITEM } from '../../services/actions/order-action';
+import { useHistory } from 'react-router-dom';
 
 
-function Modal({ children, setModalActive, title = '' }) {
 
-    const dispatch=useDispatch();
+function Modal({ children, title = '' }) {
+    const history = useHistory();
+    const dispatch = useDispatch();
 
     const closeModal = useCallback(() => {
-        setModalActive(false)
+        //setModalActive(false)
         clearModal();
-        
+        //history.goBack();
+        if (title !== '') {
+            history.goBack();
+        }
     }, [])
 
     useEffect(() => {
         const closeModalByEscape = (e) => {
             if (e.key === 'Escape') {
-                setModalActive(false);
+                //setModalActive(false);
                 clearModal();
+                if (title !== '') {
+                    history.goBack();
+                }
             }
         }
         window.addEventListener('keydown', closeModalByEscape)
@@ -31,15 +39,12 @@ function Modal({ children, setModalActive, title = '' }) {
         return () => window.removeEventListener('keydown', closeModalByEscape)
     }, [])
 
-    const clearModal = () =>{
-        if (title!=='')
-        {
-            dispatch({type:DELETE_MODAL_ITEM});
+    const clearModal = () => {
+        if (title !== '') {
+            dispatch({ type: DELETE_MODAL_ITEM });
         }
-        else
-        {
-            dispatch({type: DELETE_ORDER_ITEM})
-
+        else {
+            dispatch({ type: DELETE_ORDER_ITEM })
         }
     }
 
@@ -73,7 +78,7 @@ function Modal({ children, setModalActive, title = '' }) {
 
 Modal.propTypes = {
     children: PropTypes.object.isRequired,
-    setModalActive: PropTypes.func.isRequired,
+    //setModalActive: PropTypes.func.isRequired,
     isOrder: PropTypes.string
 };
 
