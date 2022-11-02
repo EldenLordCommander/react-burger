@@ -93,11 +93,7 @@ function BurgerConstructor() {
                 setModal(true);
             }
         }
-        // if ((firstIngredient.length>0)||(components.length>0)){
-        //     const orderElements = [firstIngredient[0].item._id, ...components, firstIngredient[0].item._id];
-        //     dispatch(getOrder(orderElements));
-        //     setModal(true);
-        // }
+        
 
     }
 

@@ -3,7 +3,7 @@ import styles from './profile.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../../services/actions/update-action';
+import { updateUser, updateUserWithRefresh } from '../../services/actions/update-action';
 import { logoutUser } from '../../services/actions/logout-actions';
 import { CLEAR_USER_DATA } from '../../services/actions/user-action';
 import { getUserWithRefresh } from '../../services/actions/user-action';
@@ -15,23 +15,24 @@ export function ProfilePage() {
     //console.log(user);
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState(user.password);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUserWithRefresh);
       }, [dispatch]);
 
+    const regForm = {
+        name: name,
+        email: email,
+        password: password
+    }
+
     function saveNewInfo(e) {
-        e.preventDefault();
-        const regForm = {
-            name: name,
-            email: email,
-            password: password
-        }
-        //console.log(regForm);
-        dispatch(updateUser(regForm));
-        dispatch(getUserWithRefresh);
+        console.log(regForm);
+        //dispatch(updateUser(regForm));
+        dispatch(updateUserWithRefresh(regForm));
+        dispatch(getUserWithRefresh());
     }
 
     function logoutClick()
@@ -103,6 +104,7 @@ export function ProfilePage() {
                         <Input type='password'
                             value={password ? password : ''}
                             placeholder='Пароль'
+                            autoComplete='new-password'
                             onChange={(e) => {
                                 setPassword(e.target.value)
                             }}></Input>

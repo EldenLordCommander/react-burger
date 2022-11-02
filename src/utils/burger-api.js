@@ -128,7 +128,7 @@ export const registerUser = (form) => {
             if (result.success) {
                 let accessToken = result.accessToken.split('Bearer ')[1]
                 if (accessToken) {
-                    setCookie('accessToken', accessToken, { expires: 1200 });
+                    setCookie('accessToken', accessToken, { expires: 3600 });
                 }
                 localStorage.setItem('refreshToken', result.refreshToken);
 
@@ -152,7 +152,7 @@ export const login = (form) => {
             if (result.success) {
                 let accessToken = result.accessToken.split('Bearer ')[1]
                 if (accessToken) {
-                    setCookie('accessToken', accessToken, { expires: 1200 });
+                    setCookie('accessToken', accessToken, { expires: 3600 });
                 }
                 localStorage.setItem('refreshToken', result.refreshToken);
 
@@ -175,7 +175,7 @@ export const updateToken = () => {
             if (result.success) {
                 let accessToken = result.accessToken.split('Bearer ')[1]
                 if (accessToken) {
-                    setCookie('accessToken', accessToken, { expires: 1200 });
+                    setCookie('accessToken', accessToken, { expires: 3600 });
                 }
                 localStorage.setItem('refreshToken', result.refreshToken);
 
@@ -218,7 +218,7 @@ export const fetchWithRefresh = async () => {
     } catch (err) {
         if (err.message === 'jwt expired') {
             const { refreshToken, accessToken } = await refreshTokenRequest();
-            setCookie('accessToken', accessToken);
+            setCookie('accessToken', accessToken.split("Bearer ")[1], { expires: 3600 });
             localStorage.setItem('refreshToken', refreshToken);
 
             const res = await fetch(USER_URL, {
@@ -228,6 +228,39 @@ export const fetchWithRefresh = async () => {
                     Authorization: 'Bearer ' + getCookie('accessToken')
                 }
             });
+
+            return await checkResponse(res);
+        } else {
+            return Promise.reject(err);
+        }
+    }
+}
+
+export const updateWithRefresh = async (form) => {
+    try {
+        const res = await fetch(USER_URL, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+                Authorization: 'Bearer ' + getCookie('accessToken')
+            },
+            body: JSON.stringify(form)
+        });
+        return await checkUserResponse(res);
+    } catch (err) {
+        if (err.message === 'jwt expired') {
+            const { refreshToken, accessToken } = await refreshTokenRequest();
+            setCookie('accessToken', accessToken.split("Bearer ")[1], { expires: 3600 });
+            localStorage.setItem('refreshToken', refreshToken);
+
+            const res = fetch(USER_URL, {
+                method: 'PATCH',
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                    Authorization: 'Bearer ' + getCookie('accessToken')
+                },
+                body: JSON.stringify(form)
+            })
 
             return await checkResponse(res);
         } else {
@@ -260,7 +293,6 @@ export const logout = () => {
     })
         .then(checkResponse)
         .then((result) => {
-            console.log(result);
             if (result.success) {
                 localStorage.setItem('refreshToken', '')
                 setCookie('accessToken', '', {expires: 0})

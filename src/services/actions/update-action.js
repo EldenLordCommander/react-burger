@@ -1,4 +1,4 @@
-import { updateUserData } from '../../utils/burger-api'
+import { updateUserData, updateWithRefresh } from '../../utils/burger-api'
 
 export const PATCH_USER_REQUEST = 'PATCH_USER_REQUEST';
 export const PATCH_USER_SUCCESS = 'PATCH_USER_SUCCESS';
@@ -25,3 +25,27 @@ export function updateUser(form) {
         })
     }
 } 
+
+
+export function updateUserWithRefresh(form){
+    return function (dispatch) {
+        dispatch({
+            type: PATCH_USER_REQUEST
+        })
+        updateWithRefresh(form).then(res => {
+            console.log(res);
+            if (res) {
+                dispatch({
+                    type: PATCH_USER_SUCCESS,
+                    data: res
+                })
+            } else {
+                throw new Error(res.errorMessage)
+            }
+        }).catch(err => {
+            dispatch({
+                type: PATCH_USER_FAILED
+            })
+        })
+    }
+}
