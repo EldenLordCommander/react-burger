@@ -5,14 +5,17 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
-import { ADD_BUN_ITEM, 
-    DELETE_BUN_ITEM, 
-    ADD_COMPONENT_ITEM  } 
+import {
+    ADD_BUN_ITEM,
+    DELETE_BUN_ITEM,
+    ADD_COMPONENT_ITEM
+}
     from '../../services/actions/constructor-actions';
 import { UPDATE_CONSTRUCTOR_LIST } from '../../services/actions/constructor-actions';
 import { v4 as uuidv4 } from 'uuid';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import { getOrder } from '../../services/actions/order-action';
+import { Link, useHistory } from "react-router-dom";
 
 
 
@@ -22,18 +25,19 @@ function BurgerConstructor() {
     const firstIngredient = useSelector((store) => store.burgerConstructor.dataConstructor.bun);
     const leftIngredients = useSelector((store) => store.burgerConstructor.dataConstructor.components);
     const totalPrice = useSelector((store) => store.burgerConstructor.total);
+    const history = useHistory();
 
-    
+    const userLogin = useSelector((store) => store.login.success);
+
     const [{ isHover }, dropTargerRef] = useDrop({
         accept: 'ingredients',
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
         drop(item) {
-            if (item.item!==undefined)
-            {
+            if (item.item !== undefined) {
                 if (item.item.type === 'bun') {
-                    if (firstIngredient.length>0) {
+                    if (firstIngredient.length > 0) {
                         dispatch({
                             type: DELETE_BUN_ITEM,
                             item: item
@@ -42,17 +46,16 @@ function BurgerConstructor() {
                             type: ADD_BUN_ITEM,
                             payload: {
                                 ...item,
-                                uid:uuidv4()
+                                uid: uuidv4()
                             }
                         })
                     }
-                    else
-                    {
+                    else {
                         dispatch({
                             type: ADD_BUN_ITEM,
                             payload: {
                                 ...item,
-                                uid:uuidv4()
+                                uid: uuidv4()
                             }
                         })
                     }
@@ -63,7 +66,7 @@ function BurgerConstructor() {
                         type: ADD_COMPONENT_ITEM,
                         payload: {
                             ...item,
-                            uid:uuidv4()
+                            uid: uuidv4()
                         }
                     })
                 }
@@ -74,29 +77,37 @@ function BurgerConstructor() {
     const [openModal, setModal] = useState(false);
 
     const components = useSelector((store) => store.burgerConstructor.dataConstructor.components.map((e) => e.item._id));
-    
+
     const order = useSelector(
         (store) => store.order);
 
     const orderClick = () => {
-        if ((firstIngredient.length>0)||(components.length>0)){
-            const orderElements = [firstIngredient[0].item._id, ...components, firstIngredient[0].item._id];
-            dispatch(getOrder(orderElements));
-            setModal(true);
+        if (!userLogin) {
+            history.replace({ pathname: '/login' });
         }
+        else
+        {
+            if ((firstIngredient.length > 0) || (components.length > 0)) {
+                const orderElements = [firstIngredient[0].item._id, ...components, firstIngredient[0].item._id];
+                dispatch(getOrder(orderElements));
+                setModal(true);
+            }
+        }
+        
+
     }
 
-  const moveCard = useCallback((dragIndex, hoverIndex) => {
-    const dragCard = leftIngredients[dragIndex];
-    const newCards = [...leftIngredients]
-    newCards.splice(dragIndex, 1)
-    newCards.splice(hoverIndex, 0, dragCard)
-    dispatch({
-      type: UPDATE_CONSTRUCTOR_LIST,
-      payload: newCards,
-    })
-  }, [leftIngredients, dispatch]);
-    
+    const moveCard = useCallback((dragIndex, hoverIndex) => {
+        const dragCard = leftIngredients[dragIndex];
+        const newCards = [...leftIngredients]
+        newCards.splice(dragIndex, 1)
+        newCards.splice(hoverIndex, 0, dragCard)
+        dispatch({
+            type: UPDATE_CONSTRUCTOR_LIST,
+            payload: newCards,
+        })
+    }, [leftIngredients, dispatch]);
+
 
 
     return (
@@ -120,7 +131,7 @@ function BurgerConstructor() {
                     {leftIngredients &&
                         leftIngredients.map((item, index) =>
                         (
-                            <BurgerConstructorItem item={item} key={item.uid} index={index} moveCard={moveCard}/>
+                            <BurgerConstructorItem item={item} key={item.uid} index={index} moveCard={moveCard} />
                         )
                         )
                     }

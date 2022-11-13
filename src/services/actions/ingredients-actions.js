@@ -1,4 +1,4 @@
-import { getIngredients, getOrderId } from '../../utils/burger-api'
+import { getIngredients } from '../../utils/burger-api'
 
 export const GET_DATA_REQUEST = 'GET_DATA_REQUEST';
 export const GET_DATA_SUCCESS = 'GET_DATA_SUCCESS';

@@ -1,10 +1,16 @@
 import detailsStyle from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/types';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getData } from '../../services/actions/ingredients-actions';
 
-function IngredientDetails({ item }) {
+function IngredientDetails() {
+    const { ingredientId } = useParams();
+    
+    const item = useSelector((store) => store.ingredient.data
+        .filter((e) => e._id === ingredientId))[0];
 
-    return (
+    return (item && (
         <div>
             <div className={detailsStyle.imageBlock} >
                 <img src={item.image_large} alt={item.name}></img>
@@ -38,10 +44,7 @@ function IngredientDetails({ item }) {
             </div>
         </div>
     )
-}
-
-IngredientDetails.propTypes = {
-    item: PropTypes.oneOfType([ingredientPropTypes]).isRequired,
+    )
 }
 
 export default IngredientDetails;
