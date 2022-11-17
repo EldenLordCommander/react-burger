@@ -1,31 +1,30 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, FC } from 'react';
 import ReactDOM from "react-dom";
 import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { DELETE_MODAL_ITEM } from '../../services/actions/modal-actions';
 import { DELETE_ORDER_ITEM } from '../../services/actions/order-action';
 import { useHistory } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TModal } from '../../utils/types';
 
+export const Modal: FC<TModal> = ({ children, title = '' }) => {
 
-
-function Modal({ children, title = '' }) {
     const history = useHistory();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const closeModal = useCallback(() => {
         //setModalActive(false)
         clearModal();
-        //history.goBack();
         if (title !== '') {
             history.goBack();
         }
     }, [])
 
     useEffect(() => {
-        const closeModalByEscape = (e) => {
+        const closeModalByEscape = (e : KeyboardEvent) => {
             if (e.key === 'Escape') {
                 //setModalActive(false);
                 clearModal();
@@ -72,14 +71,9 @@ function Modal({ children, title = '' }) {
                 </section>
             </div>
         </>,
-        document.getElementById('modal')
+        document.getElementById('modal')!
     );
 }
 
-Modal.propTypes = {
-    children: PropTypes.object.isRequired,
-    //setModalActive: PropTypes.func.isRequired,
-    isOrder: PropTypes.string
-};
 
 export default Modal;

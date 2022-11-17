@@ -9,18 +9,11 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 function MainPage() {
 
-   const dispatch = useDispatch();
-
-   const data = useSelector(
-      (store) => store.ingredient.data);
-
-   // useEffect(() => {
-   //    dispatch(getCurrentUser());
-   // }, [dispatch])
-
+   const data = useAppSelector((store) => store.ingredient.data);
 
    return (
 

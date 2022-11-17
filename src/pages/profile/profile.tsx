@@ -7,16 +7,17 @@ import { updateUser, updateUserWithRefresh } from '../../services/actions/update
 import { logoutUser } from '../../services/actions/logout-actions';
 import { CLEAR_USER_DATA } from '../../services/actions/user-action';
 import { getUserWithRefresh } from '../../services/actions/user-action';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 export function ProfilePage() {
-    const user = useSelector((store) => store.login.user)
+    // const user = useSelector((store) => store.login.user)
+    const user = useAppSelector((store) => store.login.user)
     const history = useHistory();
 
-    //console.log(user);
-    const [name, setName] = useState(user.name);
-    const [email, setEmail] = useState(user.email);
-    const [password, setPassword] = useState(user.password);
-    const dispatch = useDispatch();
+    const [name, setName] = useState<string>(user!.name);
+    const [email, setEmail] = useState<string>(user!.email);
+    const [password, setPassword] = useState<string|undefined>(user!.password);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(getUserWithRefresh);
@@ -28,9 +29,8 @@ export function ProfilePage() {
         password: password
     }
 
-    function saveNewInfo(e) {
+    function saveNewInfo() {
         console.log(regForm);
-        //dispatch(updateUser(regForm));
         dispatch(updateUserWithRefresh(regForm));
         dispatch(getUserWithRefresh());
     }
@@ -110,19 +110,19 @@ export function ProfilePage() {
                             }}></Input>
                     </div>
                     <div className={styles.row}>
-                        <section hidden={(name && name != user.name) 
-                        || (email && email != user.email)
+                        <section hidden={(name && name != user!.name) 
+                        || (email && email != user!.email)
                         || (password && password != '')
                         ? false : true}
-                        className={(name && name != user.name) 
-                            || (email && email != user.email)
+                        className={(name && name != user!.name) 
+                            || (email && email != user!.email)
                             || (password && password != '')
                             ? styles.row : ''}>
                             <p onClick={() => cancel()} className={styles.alignLeft}>
                                 Отмена
                             </p>
                             &nbsp;
-                            <Button htmlType={'button'} onClick={(e) => { saveNewInfo(e) }} >
+                            <Button htmlType={'button'} onClick={(e) => { saveNewInfo() }} >
                                 Сохранить
                             </Button>
                         </section>

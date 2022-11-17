@@ -4,24 +4,25 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link, useHistory, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../services/actions/forget-password-action';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 
 export function ForgotPasswordPage() {
-    const [email, setValue] = useState('');
-    const dispatch = useDispatch();
+    const [email, setValue] = useState<string>('');
+    const dispatch = useAppDispatch();
     const history = useHistory();
     const location = useLocation();
 
 
-    const resetStatus = useSelector((store) => store.forgetPassword.success);
-    const message = useSelector((store) => store.forgetPassword.message);
-    const userLogin = useSelector((store) => store.login.success);
+    const resetStatus = useAppSelector((store) => store.forgetPassword.success);
+    const message = useAppSelector((store) => store.forgetPassword.message);
+    const userLogin = useAppSelector((store) => store.login.success);
 
-    const onChange = e => {
+    const onChange = (e : React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     };
 
-    function sendEmail(e) {
+    function sendEmail() {
         dispatch(reset(email));
         history.replace({ pathname: '/reset-password', state: location });
     }
@@ -54,7 +55,7 @@ export function ForgotPasswordPage() {
                     onChange={e=>onChange(e)}></Input>
             </div>
             <div className={styles.button}>
-                <Button onClick={(e)=>(sendEmail(e))} htmlType={'button'}>Восстановить</Button>
+                <Button onClick={(e)=>(sendEmail())} htmlType={'button'}>Восстановить</Button>
             </div>
             <div className={styles.textRow}>
                 <p className="text text_type_main-default text_color_inactive">

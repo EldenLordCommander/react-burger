@@ -1,44 +1,42 @@
-import { PATCH_USER_FAILED,
-    PATCH_USER_REQUEST,
-    PATCH_USER_SUCCESS
- } from '../actions/update-action'
+import { POST_RESET_FAILED,
+    POST_RESET_SUCCESS,
+    POST_RESET_REQUEST
+ } from '../actions/reset-password-action'
+
+export type TResetPasswordState = {
+    success: boolean;
+    message: string,
+    postRequest: boolean;
+    postFailed: boolean;
+}
 
 export const initialState = {
     success: false,
-    user: {
-        email:'',
-        name:''
-    },
+    message: '',
     postRequest: false,
     postFailed: false
 }
 
-export const loginReducer = (state = initialState, action) => {
+export const resetPasswordReducer = (state = initialState, action : any) : TResetPasswordState => {
     switch (action.type) {
-        case PATCH_USER_REQUEST: {
+        case POST_RESET_REQUEST: {
             return {
                 ...state,
                 postRequest: true,
                 postFailed: false,
             };
         }
-        case PATCH_USER_SUCCESS: {
+        case POST_RESET_SUCCESS: {
             return {
                 ...state,
                 success: action.data.success,
                 message: action.data.message,
-                user: {
-                    email: action.data.user.email,
-                    name: action.data.user.name
-                },
                 postRequest: false
             };
         }
-        case PATCH_USER_FAILED: {
+        case POST_RESET_FAILED: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
                 postFailed: true,
                 postRequest: false
             };

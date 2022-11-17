@@ -1,9 +1,11 @@
 import { Route, Redirect } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TProtectedRoute } from '../../utils/types';
 
-export default function ProtectedUnautorizedRoute({ children, ...rest }) {
-    const userLogin = useSelector((store) => store.login.success);
+export const ProtectedUnautorizedRoute: FC<TProtectedRoute> = ({ children, ...rest }) => {
+    const userLogin = useAppSelector((store) => store.login.success);
     //console.log(userLogin);
 
     return (
@@ -24,3 +26,5 @@ export default function ProtectedUnautorizedRoute({ children, ...rest }) {
         />
     );
 } 
+
+export default ProtectedUnautorizedRoute;

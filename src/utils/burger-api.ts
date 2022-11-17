@@ -1,3 +1,5 @@
+import { TMainForm, TRegisterForm, TResetForm } from "./types";
+
 const BASE_API_URL = 'https://norma.nomoreparties.space/api';
 
 export const INGREDIENTS_URL = `${BASE_API_URL}/ingredients`;
@@ -10,14 +12,15 @@ export const LOGOUT_URL = `${BASE_API_URL}/auth/logout`;
 export const TOKEN_URL = `${BASE_API_URL}/auth/token`;
 export const USER_URL = `${BASE_API_URL}/auth/user`;
 
-export function checkResponse(response) {
+
+export function checkResponse(response: Response) {
     if (!response.ok) {
         throw new Error('Ответ от сервера вернул ошибку');
     }
     return response.json();
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: string, props: any) {
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -40,7 +43,7 @@ export function setCookie(name, value, props) {
     document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
     const matches = document.cookie.match(
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
@@ -62,7 +65,7 @@ export const getIngredients = () => {
         .catch(error => alert("Ошибка запроса: " + error))
 }
 
-export const getOrderId = (clickedIngredients) => {
+export const getOrderId = (clickedIngredients: Array<string>) => {
     return fetch(ORDERS_URL, {
         method: 'POST',
         headers: {
@@ -80,7 +83,7 @@ export const getOrderId = (clickedIngredients) => {
         .catch(error => alert("Ошибка запроса: " + error))
 }
 
-export const resetPassword = (email) => {
+export const resetPassword = (email: string) => {
     return fetch(RESET_PASSWORD_URL, {
         method: 'POST',
         headers: {
@@ -98,7 +101,7 @@ export const resetPassword = (email) => {
         .catch(error => alert("Ошибка запроса: " + error))
 }
 
-export const setPassword = (form) => {
+export const setPassword = (form : TRegisterForm) => {
     return fetch(SAVE_PASSWORD_URL, {
         method: 'POST',
         headers: {
@@ -114,8 +117,8 @@ export const setPassword = (form) => {
         .catch(error => alert("Ошибка запроса: " + error))
 }
 
-export const registerUser = (form) => {
-    console.log(JSON.stringify(form));
+export const registerUser = (form : TRegisterForm) => {
+    //console.log(JSON.stringify(form));
     return fetch(REGISTER_URL, {
         method: 'POST',
         headers: {
@@ -138,7 +141,7 @@ export const registerUser = (form) => {
         .catch(error => alert("Ошибка запроса: " + error))
 }
 
-export const login = (form) => {
+export const login = (form : TMainForm) => {
     return fetch(LOGIN_URL, {
         method: 'POST',
         headers: {
@@ -185,8 +188,8 @@ export const updateToken = () => {
         .catch(error => alert("Ошибка запроса: " + error))
 }
 
-const checkUserResponse = (res) => {
-    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+const checkUserResponse = (res: Response) => {
+    return res.ok ? res.json() : res.json().then((err: any) => Promise.reject(err));
   };
 
 export const refreshTokenRequest = () => {
@@ -215,7 +218,7 @@ export const fetchWithRefresh = async () => {
             }
         });
         return await checkUserResponse(res);
-    } catch (err) {
+    } catch (err: any) {
         if (err.message === 'jwt expired') {
             const { refreshToken, accessToken } = await refreshTokenRequest();
             setCookie('accessToken', accessToken.split("Bearer ")[1], { expires: 3600 });
@@ -236,7 +239,7 @@ export const fetchWithRefresh = async () => {
     }
 }
 
-export const updateWithRefresh = async (form) => {
+export const updateWithRefresh = async (form : TRegisterForm) => {
     try {
         const res = await fetch(USER_URL, {
             method: 'PATCH',
@@ -247,13 +250,13 @@ export const updateWithRefresh = async (form) => {
             body: JSON.stringify(form)
         });
         return await checkUserResponse(res);
-    } catch (err) {
+    } catch (err: any) {
         if (err.message === 'jwt expired') {
             const { refreshToken, accessToken } = await refreshTokenRequest();
             setCookie('accessToken', accessToken.split("Bearer ")[1], { expires: 3600 });
             localStorage.setItem('refreshToken', refreshToken);
 
-            const res = fetch(USER_URL, {
+            const res = await fetch(USER_URL, {
                 method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json;charset=utf-8",
@@ -302,7 +305,7 @@ export const logout = () => {
         .catch(error => alert("Ошибка запроса: " + error))
 }
 
-export const updateUserData = (form) => {
+export const updateUserData = (form : TRegisterForm) => {
     return fetch(USER_URL, {
         method: 'PATCH',
         headers: {
