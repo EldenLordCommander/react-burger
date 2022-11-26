@@ -4,19 +4,20 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link, useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { savePassword } from '../../services/actions/registration-action';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 
 export function RegistrationPage() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
+    const [name, setName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const dispatch = useAppDispatch();
     const history = useHistory();
 
-    const status = useSelector((store) => store.registration.success);
-    const userLogin = useSelector((store) => store.login.success);
+    const status = useAppSelector((store) => store.registration.success);
+    const userLogin = useAppSelector((store) => store.login.success);
 
-    function registerUser(e){
+    function registerUser(e : React.SyntheticEvent<Element, Event>){
         e.preventDefault();
         const regForm={ 
             name: name,

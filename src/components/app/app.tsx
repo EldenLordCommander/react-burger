@@ -1,25 +1,27 @@
 import { BrowserRouter, Router, Switch, Route, useLocation, useHistory } from 'react-router-dom';
 import ProtectedUnautorizedRoute from '../protected-route/protected-unautorized-route';
-import ProtectedAutorizedRoute from '../protected-route/protected-autorized-route';
-import MainPage from '../main-page/main-page.js'
+import MainPage from '../main-page/main-page'
 import { LoginPage, ForgotPasswordPage, ProfilePage, RegistrationPage, ResetPasswordPage, OrdersPage } from '../../pages'
-import AppHeader from '../app-header/app-header.js';
+import AppHeader from '../app-header/app-header';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details.js';
-import Modal from '../modal/modal.js';
+import OrderDetails from '../order-details/order-details';
+import Modal from '../modal/modal';
 import { getData } from '../../services/actions/ingredients-actions';
 import { getCurrentUser, getUserWithRefresh } from '../../services/actions/user-action';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TLocationState } from '../../utils/types';
 
 
 function App() {
    
    const ModalSwitch = () => {
       const location = useLocation();
-      let background = location.state && location.state.background;
+      const { state } = location as TLocationState;
+      let background = location.state && state.background;
       
-      const dispatch = useDispatch();
+      const dispatch = useAppDispatch();
       useEffect(() => {
          dispatch(getData());
          dispatch(getUserWithRefresh());

@@ -5,17 +5,18 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../services/actions/login-action';
 import { Route, Redirect } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 export function LoginPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const dispatch = useAppDispatch();
     const history = useHistory();
 
-    const status = useSelector((store) => store.login.success);
-    const userLogin = useSelector((store) => store.login.success);
+    const status = useAppSelector((store) => store.login.success);
+    const userLogin = useAppSelector((store) => store.login.success);
 
-    function login(e) {
+    function login(e : React.SyntheticEvent<Element, Event>) {
         e.preventDefault();
         const regForm = {
             email: email,

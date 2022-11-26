@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from '../../services/actions/update-action';
 import { logoutUser } from '../../services/actions/logout-actions';
 import { CLEAR_USER_DATA } from '../../services/actions/user-action';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 
 export function OrdersPage() {
-    const user = useSelector((store) => store.login.user)
+    const user = useAppSelector((store) => store.login.user)
     const history = useHistory();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         //dispatch();

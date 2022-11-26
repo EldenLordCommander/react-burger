@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getData } from '../../services/actions/ingredients-actions';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 function IngredientDetails() {
-    const { ingredientId } = useParams();
+    const { ingredientId } = useParams<{ingredientId : string}>();
     
-    const item = useSelector((store) => store.ingredient.data
+    const item = useAppSelector((store) => store.ingredient.data
         .filter((e) => e._id === ingredientId))[0];
 
     return (item && (

@@ -1,47 +1,52 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ingredientStyle from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
 import TabHeader from '../tab-header/tab-header';
-import IngredientDetails from '../ingredient-details/ingredient-details.js';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import IngredientItem from '../ingredient-item/ingredient-item.js';
+import IngredientItem from '../ingredient-item/ingredient-item';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { GET_MODAL_ITEM } from '../../services/actions/modal-actions';
 
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TIngredientType } from '../../utils/types';
+
 function BurgerIngredients() {
-    const data = useSelector((store) => store.ingredient.data);
-    const dispatch = useDispatch();
+    const data = useAppSelector((store) => store.ingredient.data);
+    const dispatch = useAppDispatch();
 
-    const bun = useRef();
-    const sauce = useRef();
-    const filling = useRef();
-    const mainIngredientList = useRef();
+    const bun = useRef<HTMLDivElement>(null);
+    const sauce = useRef<HTMLDivElement>(null);
+    const filling = useRef<HTMLDivElement>(null);
+    const mainIngredientList = useRef<HTMLDivElement>(null);
 
+    // const [openModal, setModal] = useState<boolean>(false);
+    // const [selectedIngredient, setIngredient] = useState();
 
-    const [openModal, setModal] = useState(false);
-    const [selectedIngredient, setIngredient] = useState();
+    const [current, setCurrent] = useState<string>('one');
 
-    const [current, setCurrent] = React.useState('one');
-
-    const handlerScroll = (tab, current) => {
+    const handlerScroll = (tab : React.RefObject<HTMLDivElement>, current: string) => {
         setCurrent(current);
         
-        tab.current.scrollIntoView({ block: "start", behavior: "smooth" });
+        if (tab.current !== null){
+            tab.current.scrollIntoView({ block: "start", behavior: "smooth" });
+        }
     };
 
     useEffect(() => {
         if (mainIngredientList.current) {
             mainIngredientList.current.addEventListener("scroll", () => {
-                const scrollTop = mainIngredientList.current.scrollTop;
-                if (scrollTop < parseFloat(bun.current.offsetHeight)) {
+                const scrollTop = mainIngredientList.current !== null ? mainIngredientList.current.scrollTop : null;
+                const bunHeight = bun.current !== null ? bun.current.offsetHeight : null;
+                const sauseHeight = sauce.current !== null ? sauce.current.offsetHeight : null;
+                if (scrollTop !== null &&  Number(scrollTop) < Number(bunHeight)) {
                     setCurrent("one");
                 }
-                else if (scrollTop < parseFloat(bun.current.offsetHeight) + parseFloat(sauce.current.offsetHeight)) {
+                else if (scrollTop !== null && Number(scrollTop) < Number(bunHeight) + Number(sauseHeight)) {
                     setCurrent("two");
                 }
-                else if (scrollTop > parseFloat(bun.current.offsetHeight) + parseFloat(sauce.current.offsetHeight)) {
+                else if (scrollTop !== null && Number(scrollTop) > Number(bunHeight) + Number(sauseHeight)) {
                     setCurrent("three");
                 }
             });
@@ -49,7 +54,7 @@ function BurgerIngredients() {
     }, []);
 
 
-    const ingredientClick = (item) => {
+    const ingredientClick = (item : TIngredientType) => {
         //setModal(true);
         //setIngredient(item);
         dispatch({ type: GET_MODAL_ITEM, item })
@@ -119,11 +124,6 @@ function BurgerIngredients() {
                                 )
                         }
                     </div>
-                    {/* {openModal && selectedIngredient &&
-                        <Modal setModalActive={setModal} title={'Детали ингридиента'} id={selectedIngredient._id}>
-                            <IngredientDetails item={selectedIngredient} />
-                        </Modal>
-                    } */}
                 </section>
             </div>
         </div>

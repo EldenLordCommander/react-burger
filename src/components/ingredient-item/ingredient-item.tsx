@@ -3,14 +3,16 @@ import ingredientStyle from './ingredient-item.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details.js';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
-import { ingredientPropTypes } from '../../utils/types';
+//import { ingredientPropTypes } from '../../utils/types';
 import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TIngredientType } from '../../utils/types'
+import { FC } from 'react';
 
-export default function IngredientItem({ item }) {
+export const IngredientItem: FC<{item: TIngredientType}> = ({ item }) => {
     const location = useLocation();
 
-    const counter = useSelector((store) => item.type === 'bun'
+    const counter = useAppSelector((store) => item.type === 'bun'
         ? store.burgerConstructor.dataConstructor.bun
             .filter((e) => e.item._id === item._id).length
         : store.burgerConstructor.dataConstructor.components
@@ -50,5 +52,7 @@ export default function IngredientItem({ item }) {
         </>
     )
 }
+
+export default IngredientItem;
 
 

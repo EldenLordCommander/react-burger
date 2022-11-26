@@ -1,7 +1,15 @@
-import { POST_PASSWORD_REQUEST,
-    POST_PASSWORD_SUCCESS,
-    POST_PASSWORD_FAILED
- } from '../actions/forget-password-action'
+import { POST_LOGOUT_FAILED,
+    POST_LOGOUT_REQUEST,
+    POST_LOGOUT_SUCCESS
+ } from '../actions/logout-actions'
+
+
+export type TLogoutState = {
+    success: boolean;
+    message: string,
+    postRequest: boolean;
+    postFailed: boolean;
+}
 
 export const initialState = {
     success: false,
@@ -10,16 +18,16 @@ export const initialState = {
     postFailed: false
 }
 
-export const forgetPasswordReducer = (state = initialState, action) => {
+export const logoutReducer = (state = initialState, action : any) : TLogoutState => {
     switch (action.type) {
-        case POST_PASSWORD_REQUEST: {
+        case POST_LOGOUT_REQUEST: {
             return {
                 ...state,
                 postRequest: true,
                 postFailed: false,
             };
         }
-        case POST_PASSWORD_SUCCESS: {
+        case POST_LOGOUT_SUCCESS: {
             return {
                 ...state,
                 success: action.data.success,
@@ -27,7 +35,7 @@ export const forgetPasswordReducer = (state = initialState, action) => {
                 postRequest: false
             };
         }
-        case POST_PASSWORD_FAILED: {
+        case POST_LOGOUT_FAILED: {
             return {
                 ...state,
                 postFailed: true,

@@ -4,18 +4,22 @@ import { Button, Input, ShowIcon } from '@ya.praktikum/react-developer-burger-ui
 import { Link, useHistory, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { savePassword } from '../../services/actions/reset-password-action';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TLocationState } from '../../utils/types';
 
 export function ResetPasswordPage() {
-    const [token, setToken] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
+    const [token, setToken] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const dispatch = useAppDispatch();
     const history = useHistory();
     const location = useLocation();
 
-    const status = useSelector((store) => store.reset.success);
-    const userLogin = useSelector((store) => store.login.success);
+    const { state } = location as TLocationState;
+    
+    const status = useAppSelector((store) => store.reset.success);
+    const userLogin = useAppSelector((store) => store.login.success);
 
-    function saveNewPassword(e) {
+    function saveNewPassword(e : React.SyntheticEvent<Element, Event>) {
         e.preventDefault();
         const form = {
             password: password,
@@ -42,7 +46,7 @@ export function ResetPasswordPage() {
 
     return (
         <>
-            {location.state && location.state.pathname === "/forgot-password" ? (
+            {location.state && state.pathname === "/forgot-password" ? (
                 <div className={styles.resetForm}>
                     <div className={styles.row}>
                         <p className="text text_type_main-large">
@@ -50,7 +54,7 @@ export function ResetPasswordPage() {
                         </p>
                     </div>
                     <div className={styles.row}>
-                        <Input type='password' value={password} placeholder='Введите новый пароль' icon={ShowIcon}
+                        <Input type='password' value={password} placeholder='Введите новый пароль' icon="ShowIcon"
                             onChange={(e) => {
                                 setPassword(e.target.value)
                             }}

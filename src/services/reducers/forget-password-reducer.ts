@@ -1,7 +1,14 @@
-import { POST_RESET_FAILED,
-    POST_RESET_SUCCESS,
-    POST_RESET_REQUEST
- } from '../actions/reset-password-action'
+import { POST_PASSWORD_REQUEST,
+    POST_PASSWORD_SUCCESS,
+    POST_PASSWORD_FAILED
+ } from '../actions/forget-password-action'
+
+ export type TForgetPasswordState = {
+    success: boolean;
+    message: string,
+    postRequest: boolean;
+    postFailed: boolean;
+}
 
 export const initialState = {
     success: false,
@@ -10,16 +17,16 @@ export const initialState = {
     postFailed: false
 }
 
-export const resetPasswordReducer = (state = initialState, action) => {
+export const forgetPasswordReducer = (state = initialState, action: any) : TForgetPasswordState=> {
     switch (action.type) {
-        case POST_RESET_REQUEST: {
+        case POST_PASSWORD_REQUEST: {
             return {
                 ...state,
                 postRequest: true,
                 postFailed: false,
             };
         }
-        case POST_RESET_SUCCESS: {
+        case POST_PASSWORD_SUCCESS: {
             return {
                 ...state,
                 success: action.data.success,
@@ -27,7 +34,7 @@ export const resetPasswordReducer = (state = initialState, action) => {
                 postRequest: false
             };
         }
-        case POST_RESET_FAILED: {
+        case POST_PASSWORD_FAILED: {
             return {
                 ...state,
                 postFailed: true,

@@ -1,7 +1,16 @@
-import { GET_DATA_REQUEST, 
-    GET_DATA_SUCCESS, 
+import { TIngredientType } from '../../utils/types'
+import {
+    GET_DATA_REQUEST,
+    GET_DATA_SUCCESS,
     GET_DATA_FAILED,
- } from '../actions/ingredients-actions'
+} from '../actions/ingredients-actions'
+
+
+export type TIngredientState = {
+    data: Array<TIngredientType>,
+    dataRequest: boolean;
+    dataFailed: boolean;
+}
 
 export const initialState = {
     data: [],
@@ -10,7 +19,7 @@ export const initialState = {
 
 }
 
-export const ingredientReducer = (state = initialState, action) => {
+export const ingredientReducer = (state = initialState, action: any) : TIngredientState => {
     switch (action.type) {
         case GET_DATA_REQUEST: {
             return {
@@ -33,7 +42,7 @@ export const ingredientReducer = (state = initialState, action) => {
                 dataRequest: false
             };
         }
-        
+
         default: {
             return state
         }

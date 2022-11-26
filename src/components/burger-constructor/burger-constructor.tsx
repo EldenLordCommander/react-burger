@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import constructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details.js';
+import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
 import {
@@ -10,31 +10,33 @@ import {
     DELETE_BUN_ITEM,
     ADD_COMPONENT_ITEM
 }
-    from '../../services/actions/constructor-actions';
+from '../../services/actions/constructor-actions';
 import { UPDATE_CONSTRUCTOR_LIST } from '../../services/actions/constructor-actions';
 import { v4 as uuidv4 } from 'uuid';
 import BurgerConstructorItem from '../burger-constructor-item/burger-constructor-item';
 import { getOrder } from '../../services/actions/order-action';
 import { Link, useHistory } from "react-router-dom";
-
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { TIngredientType } from '../../utils/types';
+import { TConstrunctorItem } from '../../services/reducers/constructor-reducer';
 
 
 function BurgerConstructor() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const firstIngredient = useSelector((store) => store.burgerConstructor.dataConstructor.bun);
-    const leftIngredients = useSelector((store) => store.burgerConstructor.dataConstructor.components);
-    const totalPrice = useSelector((store) => store.burgerConstructor.total);
+    const firstIngredient = useAppSelector((store) => store.burgerConstructor.dataConstructor.bun);
+    const leftIngredients = useAppSelector((store) => store.burgerConstructor.dataConstructor.components);
+    const totalPrice = useAppSelector((store) => store.burgerConstructor.total);
     const history = useHistory();
 
-    const userLogin = useSelector((store) => store.login.success);
+    const userLogin = useAppSelector((store) => store.login.success);
 
     const [{ isHover }, dropTargerRef] = useDrop({
         accept: 'ingredients',
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        drop(item) {
+        drop(item : any) {
             if (item.item !== undefined) {
                 if (item.item.type === 'bun') {
                     if (firstIngredient.length > 0) {
@@ -74,12 +76,11 @@ function BurgerConstructor() {
         }
     });
 
-    const [openModal, setModal] = useState(false);
+    const [openModal, setModal] = useState<boolean>(false);
 
-    const components = useSelector((store) => store.burgerConstructor.dataConstructor.components.map((e) => e.item._id));
+    const components = useAppSelector((store) => store.burgerConstructor.dataConstructor.components.map((e) => e.item._id));
 
-    const order = useSelector(
-        (store) => store.order);
+    const order = useAppSelector((store) => store.order);
 
     const orderClick = () => {
         if (!userLogin) {
@@ -93,11 +94,9 @@ function BurgerConstructor() {
                 setModal(true);
             }
         }
-        
-
     }
 
-    const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const moveCard = useCallback((dragIndex : number, hoverIndex : number) => {
         const dragCard = leftIngredients[dragIndex];
         const newCards = [...leftIngredients]
         newCards.splice(dragIndex, 1)
@@ -107,8 +106,6 @@ function BurgerConstructor() {
             payload: newCards,
         })
     }, [leftIngredients, dispatch]);
-
-
 
     return (
         <section>
@@ -162,7 +159,7 @@ function BurgerConstructor() {
 
             </section >
             {openModal && order.order.order &&
-                <Modal setModalActive={setModal}>
+                <Modal>
                     <OrderDetails />
                 </Modal>
             }
@@ -170,6 +167,5 @@ function BurgerConstructor() {
 
     )
 }
-
 
 export default BurgerConstructor;

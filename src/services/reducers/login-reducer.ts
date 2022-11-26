@@ -1,32 +1,45 @@
-import { POST_LOGIN_REQUEST,
+import {
+    POST_LOGIN_REQUEST,
     POST_LOGIN_SUCCESS,
     POST_LOGIN_FAILED
- } from '../actions/login-action'
+} from '../actions/login-action'
 
- import { PATCH_USER_FAILED,
+import {
+    PATCH_USER_FAILED,
     PATCH_USER_REQUEST,
     PATCH_USER_SUCCESS
- } from '../actions/update-action'
+} from '../actions/update-action'
 
- 
- import { POST_USER_FAILED,
+import {
+    POST_USER_FAILED,
     POST_USER_REQUEST,
     POST_USER_SUCCESS,
     CLEAR_USER_DATA
- } from '../actions/user-action'
- 
+} from '../actions/user-action'
+
+export type TLoginData = {
+    email: string;
+    name: string;
+    password?: string;
+}
+
+export type TLoginState = {
+    success: boolean;
+    message: string,
+    user?: TLoginData;
+    postRequest: boolean;
+    postFailed: boolean;
+}
+
 export const initialState = {
     success: false,
-    // user: {
-    //     email:'',
-    //     name:''
-    // },
-    user: {},
+    message: '',
+    user: undefined,
     postRequest: false,
     postFailed: false
 }
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = initialState, action: any) : TLoginState => {
     switch (action.type) {
         case POST_LOGIN_REQUEST: {
             return {
@@ -117,11 +130,11 @@ export const loginReducer = (state = initialState, action) => {
             return {
                 ...state,
                 success: false,
-                user:{}
+                user: undefined
             };
         }
 
-        
+
 
         default: {
             return state

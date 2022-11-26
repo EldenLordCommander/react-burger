@@ -1,11 +1,11 @@
 import orderStyle from './order-details.module.css';
 import checkImage from '../../images/done.png'
 import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 
 function OrderDetails() {
 
-    const newOrder = useSelector(
-        (store) => store.order.order.order);
+    const newOrder = useAppSelector((store) => store.order.order.order);
 
     return (newOrder && (
             <div className={orderStyle.orderBlock}>
