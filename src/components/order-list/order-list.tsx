@@ -14,11 +14,11 @@ export const OrdersList: FC<{ orders: TOrder[] }> = ({orders}) => {
     const { url } = useRouteMatch();
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        return () => {
-            dispatch(wsConnectionClosedAction());
-        }
-    }, []);
+    // useEffect(() => {
+    //     return () => {
+    //         dispatch(wsConnectionClosedAction());
+    //     }
+    // }, []);
 
     const imgStyle = (index: number) => {
         return {
