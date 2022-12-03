@@ -7,17 +7,22 @@ import { updateUser } from '../../services/actions/update-action';
 import { logoutUser } from '../../services/actions/logout-actions';
 import { CLEAR_USER_DATA } from '../../services/actions/user-action';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { OrdersList } from '../../components/order-list/order-list';
+import { wsConnectionClosedAction, wsConnectionStartAction } from '../../services/actions/wsActions';
+import { wsUrlUser } from '../../utils/burger-api';
 
 
 export function OrdersPage() {
     const user = useAppSelector((store) => store.login.user)
     const history = useHistory();
-
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        //dispatch();
-      }, [dispatch]);
+    const orders = useAppSelector((store) => store.wsReducer.orders.orders);
+    //console.log(orders);
+
+    // useEffect(() => {
+    //     //dispatch();
+    //   }, [dispatch]);
 
 
     function logoutClick()
@@ -28,7 +33,14 @@ export function OrdersPage() {
           })
         history.replace({ pathname: '/login' });
     }
-
+    
+    useEffect(() => {
+        dispatch(wsConnectionStartAction(wsUrlUser));
+        return () => {
+            dispatch(wsConnectionClosedAction());
+        }
+    }, []);
+    
     return (
         <>
             <div className={styles.form}>
@@ -61,8 +73,10 @@ export function OrdersPage() {
                         </p>
                     </div>
                 </div>
-                <div className={styles.profileForm}>
-                    
+                <div className={styles.feedForm}>
+                    {orders &&
+                        <OrdersList orders={orders} />
+                    }
                 </div>
             </div>
         </>

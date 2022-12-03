@@ -1,5 +1,8 @@
 import { TMainForm, TRegisterForm, TResetForm } from "./types";
 
+export const wsUrlAll = 'wss://norma.nomoreparties.space/orders/all';
+export const wsUrlUser = `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`;
+
 const BASE_API_URL = 'https://norma.nomoreparties.space/api';
 
 export const INGREDIENTS_URL = `${BASE_API_URL}/ingredients`;
@@ -11,6 +14,7 @@ export const LOGIN_URL = `${BASE_API_URL}/auth/login`;
 export const LOGOUT_URL = `${BASE_API_URL}/auth/logout`;
 export const TOKEN_URL = `${BASE_API_URL}/auth/token`;
 export const USER_URL = `${BASE_API_URL}/auth/user`;
+
 
 
 export function checkResponse(response: Response) {
@@ -70,6 +74,7 @@ export const getOrderId = (clickedIngredients: Array<string>) => {
         method: 'POST',
         headers: {
             "Content-Type": "application/json;charset=utf-8",
+            Authorization: 'Bearer ' + getCookie('accessToken')
         },
         body: JSON.stringify({
             ingredients: clickedIngredients
@@ -300,6 +305,7 @@ export const logout = () => {
                 localStorage.setItem('refreshToken', '')
                 setCookie('accessToken', '', {expires: 0})
                 //window.location.reload();
+                return result;
             }
         })
         .catch(error => alert("Ошибка запроса: " + error))

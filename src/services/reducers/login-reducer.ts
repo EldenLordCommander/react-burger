@@ -1,20 +1,23 @@
 import {
     POST_LOGIN_REQUEST,
     POST_LOGIN_SUCCESS,
-    POST_LOGIN_FAILED
+    POST_LOGIN_FAILED,
+    TPostLoginActions
 } from '../actions/login-action'
 
 import {
     PATCH_USER_FAILED,
     PATCH_USER_REQUEST,
-    PATCH_USER_SUCCESS
+    PATCH_USER_SUCCESS,
+    TPatchUserActions
 } from '../actions/update-action'
 
 import {
     POST_USER_FAILED,
     POST_USER_REQUEST,
     POST_USER_SUCCESS,
-    CLEAR_USER_DATA
+    CLEAR_USER_DATA,
+    TPostUserActions
 } from '../actions/user-action'
 
 export type TLoginData = {
@@ -39,7 +42,7 @@ export const initialState = {
     postFailed: false
 }
 
-export const loginReducer = (state = initialState, action: any) : TLoginState => {
+export const loginReducer = (state = initialState, action: TPostLoginActions | TPatchUserActions | TPostUserActions) : TLoginState => {
     switch (action.type) {
         case POST_LOGIN_REQUEST: {
             return {
@@ -51,11 +54,11 @@ export const loginReducer = (state = initialState, action: any) : TLoginState =>
         case POST_LOGIN_SUCCESS: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
+                success: action.success,
+                message: action.message,
                 user: {
-                    email: action.data.user.email,
-                    name: action.data.user.name
+                    email: action.user.email,
+                    name: action.user.name
                 },
                 postRequest: false
             };
@@ -78,11 +81,11 @@ export const loginReducer = (state = initialState, action: any) : TLoginState =>
         case PATCH_USER_SUCCESS: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
+                success: action.success,
+                message: action.message,
                 user: {
-                    email: action.data.user.email,
-                    name: action.data.user.name
+                    email: action.user.email,
+                    name: action.user.name
                 },
                 postRequest: false
             };
@@ -105,24 +108,19 @@ export const loginReducer = (state = initialState, action: any) : TLoginState =>
         case POST_USER_SUCCESS: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
+                success: action.success,
+                message: action.message,
                 user: {
-                    email: action.data.user.email,
-                    name: action.data.user.name
+                    email: action.user.email,
+                    name: action.user.name
                 },
                 postRequest: false
             };
         }
-        case POST_USER_SUCCESS: {
+        case POST_USER_FAILED: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
-                user: {
-                    email: '',
-                    name: ''
-                },
+                postFailed: true,
                 postRequest: false
             };
         }

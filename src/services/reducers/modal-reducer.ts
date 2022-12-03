@@ -1,7 +1,8 @@
 import { TIngredientType } from '../../utils/types'
 
 import { GET_MODAL_ITEM,
-    DELETE_MODAL_ITEM
+    DELETE_MODAL_ITEM,
+    TModalActions
  } from '../actions/modal-actions'
 
 export type TModalState = {
@@ -12,7 +13,7 @@ export const initialState = {
     modalItem:{} as TIngredientType
 }
 
-export const modalReducer = (state = initialState, action: any) : TModalState => {
+export const modalReducer = (state = initialState, action: TModalActions) : TModalState => {
     switch (action.type) {
 
         case GET_MODAL_ITEM: {

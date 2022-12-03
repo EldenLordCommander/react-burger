@@ -1,6 +1,7 @@
 import { POST_PASSWORD_REQUEST,
     POST_PASSWORD_SUCCESS,
-    POST_PASSWORD_FAILED
+    POST_PASSWORD_FAILED,
+    TForgetPasswordActions
  } from '../actions/forget-password-action'
 
  export type TForgetPasswordState = {
@@ -17,7 +18,7 @@ export const initialState = {
     postFailed: false
 }
 
-export const forgetPasswordReducer = (state = initialState, action: any) : TForgetPasswordState=> {
+export const forgetPasswordReducer = (state = initialState, action: TForgetPasswordActions) : TForgetPasswordState=> {
     switch (action.type) {
         case POST_PASSWORD_REQUEST: {
             return {
@@ -29,8 +30,8 @@ export const forgetPasswordReducer = (state = initialState, action: any) : TForg
         case POST_PASSWORD_SUCCESS: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
+                success: action.success,
+                message: action.message,
                 postRequest: false
             };
         }

@@ -6,7 +6,8 @@ import {
     ADD_COMPONENT_ITEM,
     DELETE_COMPONENT_ITEM,
 
-    UPDATE_CONSTRUCTOR_LIST
+    UPDATE_CONSTRUCTOR_LIST,
+    TConstructorActions
 } from '../actions/constructor-actions'
 
 export type TConstrunctorItem =  {
@@ -32,7 +33,7 @@ export const initialState = {
     total: 0
 }
 
-export const constructorReducer = (state = initialState, action: any) : TConstrunctorState => {
+export const constructorReducer = (state = initialState, action: TConstructorActions) : TConstrunctorState => {
     switch (action.type) {
 
         case ADD_BUN_ITEM: {
@@ -45,7 +46,7 @@ export const constructorReducer = (state = initialState, action: any) : TConstru
                         action.payload
                     ],
                 },
-                total: state.total + parseFloat(action.payload.item.price) * 2,
+                total: state.total + action.payload.item.price * 2,
             }
         }
         case DELETE_BUN_ITEM: {
@@ -69,7 +70,7 @@ export const constructorReducer = (state = initialState, action: any) : TConstru
                         action.payload
                     ],
                 },
-                total: state.total + parseFloat(action.payload.item.price),
+                total: state.total + action.payload.item.price,
             }
         }
         case DELETE_COMPONENT_ITEM: {
@@ -79,7 +80,7 @@ export const constructorReducer = (state = initialState, action: any) : TConstru
                     ...state.dataConstructor,
                     components: state.dataConstructor.components.filter(element => element.uid !== action.payload.uid),
                 },
-                total: state.total - parseFloat(action.payload.item.price)
+                total: state.total - action.payload.item.price
             }
         }
 
