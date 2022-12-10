@@ -1,6 +1,7 @@
 import { POST_LOGOUT_FAILED,
     POST_LOGOUT_REQUEST,
-    POST_LOGOUT_SUCCESS
+    POST_LOGOUT_SUCCESS,
+    TPostLogoutActions
  } from '../actions/logout-actions'
 
 
@@ -18,7 +19,7 @@ export const initialState = {
     postFailed: false
 }
 
-export const logoutReducer = (state = initialState, action : any) : TLogoutState => {
+export const logoutReducer = (state = initialState, action : TPostLogoutActions) : TLogoutState => {
     switch (action.type) {
         case POST_LOGOUT_REQUEST: {
             return {
@@ -30,8 +31,8 @@ export const logoutReducer = (state = initialState, action : any) : TLogoutState
         case POST_LOGOUT_SUCCESS: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
+                success: action.success,
+                message: action.message,
                 postRequest: false
             };
         }

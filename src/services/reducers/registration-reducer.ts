@@ -1,6 +1,7 @@
 import { POST_REGISTRATION_FAILED,
     POST_REGISTRATION_REQUEST,
-    POST_REGISTRATION_SUCCESS
+    POST_REGISTRATION_SUCCESS,
+    TPostRegistrationActions
  } from '../actions/registration-action'
 
  export type TRegistrationState = {
@@ -27,7 +28,7 @@ export const initialState = {
     postFailed: false
 }
 
-export const registrationReducer = (state = initialState, action : any) : TRegistrationState => {
+export const registrationReducer = (state = initialState, action : TPostRegistrationActions) : TRegistrationState => {
     switch (action.type) {
         case POST_REGISTRATION_REQUEST: {
             return {
@@ -39,11 +40,11 @@ export const registrationReducer = (state = initialState, action : any) : TRegis
         case POST_REGISTRATION_SUCCESS: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
+                success: action.success,
+                message: action.message,
                 user: {
-                    email: action.data.user.email,
-                    name: action.data.user.name
+                    email: action.user.email,
+                    name: action.user.name
                 },
                 postRequest: false
             };

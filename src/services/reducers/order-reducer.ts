@@ -1,7 +1,8 @@
 import { GET_ORDER_REQUEST, 
     GET_ORDER_SUCCESS, 
     GET_ORDER_FAILED,
-    DELETE_ORDER_ITEM
+    DELETE_ORDER_ITEM,
+    TGetOrderActions
  } from '../actions/order-action'
 
 export type TOrder = {
@@ -24,7 +25,7 @@ export const initialState = {
     orderFailed: false
 }
 
-export const orderReducer = (state = initialState, action: any) : TOrderState => {
+export const orderReducer = (state = initialState, action: TGetOrderActions) : TOrderState => {
     switch (action.type) {
         case GET_ORDER_REQUEST: {
             return {

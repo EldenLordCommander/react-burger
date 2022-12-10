@@ -3,6 +3,7 @@ import {
     GET_DATA_REQUEST,
     GET_DATA_SUCCESS,
     GET_DATA_FAILED,
+    TGetDataActions,
 } from '../actions/ingredients-actions'
 
 
@@ -19,7 +20,7 @@ export const initialState = {
 
 }
 
-export const ingredientReducer = (state = initialState, action: any) : TIngredientState => {
+export const ingredientReducer = (state = initialState, action: TGetDataActions) : TIngredientState => {
     switch (action.type) {
         case GET_DATA_REQUEST: {
             return {

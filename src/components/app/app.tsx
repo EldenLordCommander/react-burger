@@ -12,21 +12,24 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { TLocationState } from '../../utils/types';
+import { Feed } from '../feed/feed';
+import { OrderItem } from '../order-item/order-item';
+import { OrderItemPage } from '../order-item-page/order-item-page';
 
 
 function App() {
-   
+
    const ModalSwitch = () => {
       const location = useLocation();
       const { state } = location as TLocationState;
       let background = location.state && state.background;
-      
+
       const dispatch = useAppDispatch();
       useEffect(() => {
          dispatch(getData());
          dispatch(getUserWithRefresh());
          //dispatch(getCurrentUser());
-       }, [dispatch]);
+      }, [dispatch]);
 
       return (
          <>
@@ -55,8 +58,21 @@ function App() {
                <Route path='/ingredients/:ingredientId' exact>
                   <IngredientDetails />
                </Route>
+               <Route path='/feed' exact>
+                  <Feed />
+               </Route>
+               <Route path='/feed/:id' exact>
+                  <OrderItemPage />
+               </Route>
                <Route path='/profile/orders' exact>
-                  <OrdersPage />
+                  <ProtectedUnautorizedRoute>
+                     <OrdersPage />
+                  </ProtectedUnautorizedRoute>
+               </Route>
+               <Route path='/profile/orders/:id' exact>
+                  <ProtectedUnautorizedRoute>
+                     <OrderItemPage />
+                  </ProtectedUnautorizedRoute>
                </Route>
             </Switch>
 
@@ -67,6 +83,24 @@ function App() {
                      children={
                         <Modal title={'Детали ингридиента'}>
                            <IngredientDetails />
+                        </Modal>
+                     }
+                  />
+                  <Route
+                     path='/feed/:id'
+                     children={
+                        <Modal title={'Детали заказа'}>
+                           <OrderItemPage />
+                        </Modal>
+                     }
+                  />
+                  <Route
+                     path='/profile/orders/:id'
+                     children={
+                        <Modal title={'Детали заказа'}>
+                           <ProtectedUnautorizedRoute>
+                              <OrderItemPage />
+                           </ProtectedUnautorizedRoute>
                         </Modal>
                      }
                   />

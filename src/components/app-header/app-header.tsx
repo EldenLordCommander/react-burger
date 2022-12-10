@@ -15,7 +15,7 @@ function AppHeader() {
                     </NavLink>
                 </div>
                 <div className={appStyles.orderListBlock}>
-                    <NavLink to="/" activeClassName={appStyles.linkUsed} exact>
+                    <NavLink to="/feed" activeClassName={appStyles.linkUsed} exact>
                         <ListIcon type="primary" />
                         Лента заказов
                     </NavLink>

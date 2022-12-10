@@ -1,0 +1,94 @@
+.orderBlock {
+    /* text-align: center; */
+    margin: auto;
+    margin-top: 10%;
+    width: 500px;
+    padding: 10px;
+}
+
+.orderTitle {
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+.ingredientList {
+    /* max-height: calc(100vh - 100px); */
+    max-height: 200px;
+    /* max-width: 300px; */
+    overflow: auto;
+    margin-top: 24px;
+    margin-bottom: 40px;
+
+}
+
+.ingredientList::-webkit-scrollbar {
+    width: 5px;
+}
+
+.ingredientList::-webkit-scrollbar-track {
+    background-color: #2F2F37;
+}
+
+.ingredientList::-webkit-scrollbar-thumb {
+    background-color: #7e7eb4;
+}
+
+.statusTitle {
+    text-align: left;
+    margin-bottom: 60px;
+    color: #2ac7cc;
+}
+
+.headerTitle {
+    text-align: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 40px;
+}
+
+.footerBlock {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 24px;
+}
+
+.footerBlockLeft {
+    align-items: center;
+    text-align: left;
+    margin-right: 320px;
+    flex-direction: column;
+}
+
+.footerBlockRight {
+    align-items: center;
+    text-align: right;
+
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.orderIngredientCard {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+}
+
+.price {
+    align-items: center;
+    text-align: right;
+
+    margin-left: 30px;
+    padding-right: 10px;
+}
+
+.ingredientName{
+    align-items: center;
+    text-align: left;
+    width: 200px;
+}

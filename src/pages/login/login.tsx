@@ -1,17 +1,24 @@
 import { useState, useEffect } from 'react';
 import loginStyles from './login.module.css';
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../services/actions/login-action';
 import { Route, Redirect } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { Location } from "history";
 
+export type TState = {
+    from?: Location;
+}
 export function LoginPage() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const dispatch = useAppDispatch();
     const history = useHistory();
+    
+    const { state } = useLocation<TState>();
+    //console.log(state);
 
     const status = useAppSelector((store) => store.login.success);
     const userLogin = useAppSelector((store) => store.login.success);
@@ -25,17 +32,17 @@ export function LoginPage() {
         dispatch(loginUser(regForm))
     }
 
-    useEffect(() => {
-        if (status === true) {
-            history.replace({ pathname: '/' });
-        }
-    }, [status]);
+    // useEffect(() => {
+    //     if (status === true) {
+    //         history.replace({ pathname: '/' });
+    //     }
+    // }, [status]);
 
     if (userLogin) {
         return (
           <Redirect
             to={{
-              pathname: '/'
+              pathname: state.from?.pathname || '/'
             }}
           />
         );

@@ -1,6 +1,7 @@
 import { POST_RESET_FAILED,
     POST_RESET_SUCCESS,
-    POST_RESET_REQUEST
+    POST_RESET_REQUEST,
+    TPostResetActions
  } from '../actions/reset-password-action'
 
 export type TResetPasswordState = {
@@ -17,7 +18,7 @@ export const initialState = {
     postFailed: false
 }
 
-export const resetPasswordReducer = (state = initialState, action : any) : TResetPasswordState => {
+export const resetPasswordReducer = (state = initialState, action : TPostResetActions) : TResetPasswordState => {
     switch (action.type) {
         case POST_RESET_REQUEST: {
             return {
@@ -29,8 +30,8 @@ export const resetPasswordReducer = (state = initialState, action : any) : TRese
         case POST_RESET_SUCCESS: {
             return {
                 ...state,
-                success: action.data.success,
-                message: action.data.message,
+                success: action.success,
+                message: action.message,
                 postRequest: false
             };
         }
