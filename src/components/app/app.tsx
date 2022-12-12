@@ -27,7 +27,7 @@ function App() {
       const dispatch = useAppDispatch();
       useEffect(() => {
          dispatch(getData());
-         dispatch(getUserWithRefresh());
+         //dispatch(getUserWithRefresh());
          //dispatch(getCurrentUser());
       }, [dispatch]);
 

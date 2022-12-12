@@ -50,9 +50,9 @@ export const Modal: FC<TModal> = ({ children, title = '' }) => {
     return ReactDOM.createPortal(
         <>
             <ModalOverlay closeModal={closeModal} />
-            <div className={modalStyles.modal}>
+            <div className={modalStyles.modal} id="modal_form">
                 <section>
-                    <div className={modalStyles.closeButton}>
+                    <div className={modalStyles.closeButton} id="divCloseModalWindow">
                         <CloseIcon type="primary" onClick={() => closeModal()} />
                     </div>
                     {

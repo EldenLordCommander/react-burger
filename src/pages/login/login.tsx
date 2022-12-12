@@ -18,7 +18,7 @@ export function LoginPage() {
     const history = useHistory();
     
     const { state } = useLocation<TState>();
-    //console.log(state);
+    
 
     const status = useAppSelector((store) => store.login.success);
     const userLogin = useAppSelector((store) => store.login.success);
@@ -42,7 +42,8 @@ export function LoginPage() {
         return (
           <Redirect
             to={{
-              pathname: state.from?.pathname || '/'
+                //pathname: state.from?.pathname || '/'
+                pathname: '/'
             }}
           />
         );
@@ -66,7 +67,7 @@ export function LoginPage() {
                 </Input>
             </div>
             <div className={loginStyles.button}>
-                <Button htmlType={'button'} onClick={(e)=>{login(e)}}>Войти</Button>
+                <Button htmlType={'button'} onClick={(e)=>{login(e)}} id="btnLogin">Войти</Button>
             </div>
             <div className={loginStyles.textRow}>
                 <p className="text text_type_main-default text_color_inactive">

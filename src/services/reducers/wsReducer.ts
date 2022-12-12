@@ -13,7 +13,7 @@ export type TWSReducerState = {
     orders: TOrderRequest;
 }
 
-const initialState = {
+export const initialState = {
     wsConnected: false,
     orders: {} as TOrderRequest
 };
