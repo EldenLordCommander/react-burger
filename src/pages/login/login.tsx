@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import loginStyles from './login.module.css';
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,15 +16,15 @@ export function LoginPage() {
     const [password, setPassword] = useState<string>("");
     const dispatch = useAppDispatch();
     const history = useHistory();
-    
+    const location = useLocation();
+
     const { state } = useLocation<TState>();
-    
+
 
     const status = useAppSelector((store) => store.login.success);
     const userLogin = useAppSelector((store) => store.login.success);
 
-    function login(e : React.SyntheticEvent<Element, Event>) {
-        e.preventDefault();
+    const login = () => {
         const regForm = {
             email: email,
             password: password
@@ -32,42 +32,41 @@ export function LoginPage() {
         dispatch(loginUser(regForm))
     }
 
-    // useEffect(() => {
-    //     if (status === true) {
-    //         history.replace({ pathname: '/' });
-    //     }
-    // }, [status]);
+    function onSubmit(e: FormEvent) {
+        e.preventDefault();
+        login();
+    }
 
     if (userLogin) {
         return (
-          <Redirect
-            to={{
-                //pathname: state.from?.pathname || '/'
-                pathname: '/'
-            }}
-          />
+            <Redirect
+                to={{
+                    pathname: (state === undefined ? '/' : state.from?.pathname) || '/'
+                    //pathname: '/'
+                }}
+            />
         );
-      }
+    }
 
     return (
-        <div className={loginStyles.loginForm}>
+        <form className={loginStyles.loginForm} action="submit" onSubmit={onSubmit}>
             <div className={loginStyles.row}>
                 <p className="text text_type_main-large">
                     Вход
                 </p>
             </div>
             <div className={loginStyles.row}>
-                <Input type='email' value={email} placeholder='E-mail'
+                <Input type='email' value={email} name="email" placeholder='E-mail'
                     onChange={(e) => { setEmail(e.target.value) }}>
                 </Input>
             </div>
             <div className={loginStyles.row}>
-                <Input type='password' placeholder='Пароль' value={password}
+                <Input type='password' name="password" placeholder='Пароль' value={password}
                     onChange={(e) => { setPassword(e.target.value) }}>
                 </Input>
             </div>
             <div className={loginStyles.button}>
-                <Button htmlType={'button'} onClick={(e)=>{login(e)}} id="btnLogin">Войти</Button>
+                <Button htmlType={'submit'} id="btnLogin">Войти</Button>
             </div>
             <div className={loginStyles.textRow}>
                 <p className="text text_type_main-default text_color_inactive">
@@ -85,7 +84,7 @@ export function LoginPage() {
                     </Link>
                 </p>
             </div>
-        </div>
+        </form>
     )
 }
 

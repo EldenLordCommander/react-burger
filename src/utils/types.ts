@@ -32,7 +32,8 @@ export type TResetForm = {
 
 export type TModal = {
     children: ReactNode,
-    title?: string;
+    title?: string,
+    setActive: (arg:boolean) => void;
 };
 
 export type TBurgerConstructorItem = {

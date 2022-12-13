@@ -9,7 +9,7 @@ import { CLEAR_USER_DATA } from '../../services/actions/user-action';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { OrdersList } from '../../components/order-list/order-list';
 import { wsConnectionClosedAction, wsConnectionStartAction } from '../../services/actions/wsActions';
-import { wsUrlUser } from '../../utils/burger-api';
+import { wsUrlUser, wsUrl, getCookie } from '../../utils/burger-api';
 
 
 export function OrdersPage() {
@@ -35,7 +35,7 @@ export function OrdersPage() {
     }
     
     useEffect(() => {
-        dispatch(wsConnectionStartAction(wsUrlUser));
+        dispatch(wsConnectionStartAction(wsUrl + `?token=${getCookie('accessToken')}`) );
         return () => {
             dispatch(wsConnectionClosedAction());
         }

@@ -162,7 +162,7 @@ function BurgerConstructor() {
 
             </section >
             {openModal && order.order.order &&
-                <Modal>
+                <Modal setActive={setModal}>
                     <OrderDetails />
                 </Modal>
             }

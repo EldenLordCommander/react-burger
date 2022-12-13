@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, FormEvent } from 'react';
 import styles from './forgot-password.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory, Redirect, useLocation } from "react-router-dom";
@@ -27,11 +27,10 @@ export function ForgotPasswordPage() {
         history.replace({ pathname: '/reset-password', state: location });
     }
 
-    // useEffect(() => {
-    //     if (resetStatus === true) {
-    //         history.replace({ pathname: '/reset-password' });
-    //     }
-    // }, [resetStatus]);
+    function onSubmit(e: FormEvent) {
+        e.preventDefault();
+        sendEmail();
+    }
 
     if (userLogin) {
         return (
@@ -44,18 +43,18 @@ export function ForgotPasswordPage() {
       }
 
     return (
-        <div className={styles.forgotForm}>
+        <form className={styles.forgotForm} action="submit" onSubmit={onSubmit}>
             <div className={styles.row}>
                 <p className="text text_type_main-large">
                     Восстановление пароля
                 </p>
             </div>
             <div className={styles.row}>
-                <Input type='email' value={email} placeholder='Укажите e-mail'
+                <Input type='email' value={email} name="email" placeholder='Укажите e-mail'
                     onChange={e=>onChange(e)}></Input>
             </div>
             <div className={styles.button}>
-                <Button onClick={(e)=>(sendEmail())} htmlType={'button'}>Восстановить</Button>
+                <Button htmlType={'submit'}>Восстановить</Button>
             </div>
             <div className={styles.textRow}>
                 <p className="text text_type_main-default text_color_inactive">
@@ -65,7 +64,7 @@ export function ForgotPasswordPage() {
                     </Link>
                 </p>
             </div>
-        </div>
+        </form>
     )
 }
 

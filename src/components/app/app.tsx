@@ -15,21 +15,32 @@ import { TLocationState } from '../../utils/types';
 import { Feed } from '../feed/feed';
 import { OrderItem } from '../order-item/order-item';
 import { OrderItemPage } from '../order-item-page/order-item-page';
+import { getCookie } from '../../utils/burger-api';
 
 
 function App() {
 
    const ModalSwitch = () => {
       const location = useLocation();
+      const isAuthorized = getCookie("accessToken");
       const { state } = location as TLocationState;
       let background = location.state && state.background;
+      const history = useHistory();
 
       const dispatch = useAppDispatch();
       useEffect(() => {
+         console.log(isAuthorized);
          dispatch(getData());
+         if (isAuthorized){
+            dispatch(getUserWithRefresh());
+         }
          //dispatch(getUserWithRefresh());
          //dispatch(getCurrentUser());
       }, [dispatch]);
+
+      const closeModal = () => {
+         history.goBack();
+     }
 
       return (
          <>
@@ -81,7 +92,7 @@ function App() {
                   <Route
                      path='/ingredients/:ingredientId'
                      children={
-                        <Modal title={'Детали ингридиента'}>
+                        <Modal title={'Детали ингридиента'} setActive={closeModal}>
                            <IngredientDetails />
                         </Modal>
                      }
@@ -89,7 +100,7 @@ function App() {
                   <Route
                      path='/feed/:id'
                      children={
-                        <Modal title={'Детали заказа'}>
+                        <Modal title={'Детали заказа'} setActive={closeModal}>
                            <OrderItemPage />
                         </Modal>
                      }
@@ -97,7 +108,7 @@ function App() {
                   <Route
                      path='/profile/orders/:id'
                      children={
-                        <Modal title={'Детали заказа'}>
+                        <Modal title={'Детали заказа'} setActive={closeModal}>
                            <ProtectedUnautorizedRoute>
                               <OrderItemPage />
                            </ProtectedUnautorizedRoute>

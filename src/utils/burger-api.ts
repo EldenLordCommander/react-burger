@@ -1,6 +1,7 @@
 import { TMainForm, TRegisterForm, TResetForm } from "./types";
 
 export const wsUrlAll = 'wss://norma.nomoreparties.space/orders/all';
+export const wsUrl = 'wss://norma.nomoreparties.space/orders';
 export const wsUrlUser = `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`;
 
 const BASE_API_URL = 'https://norma.nomoreparties.space/api';
