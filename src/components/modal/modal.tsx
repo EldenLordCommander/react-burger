@@ -10,27 +10,20 @@ import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { TModal } from '../../utils/types';
 
-export const Modal: FC<TModal> = ({ children, title = '' }) => {
+export const Modal: FC<TModal> = ({ children, title = '', setActive }) => {
 
     const history = useHistory();
     const dispatch = useAppDispatch();
 
     const closeModal = useCallback(() => {
-        //setModalActive(false)
-        clearModal();
-        if (title !== '') {
-            history.goBack();
-        }
+
+        setActive(false);
     }, [])
 
     useEffect(() => {
         const closeModalByEscape = (e : KeyboardEvent) => {
             if (e.key === 'Escape') {
-                //setModalActive(false);
-                clearModal();
-                if (title !== '') {
-                    history.goBack();
-                }
+                setActive(false);
             }
         }
         window.addEventListener('keydown', closeModalByEscape)
@@ -38,21 +31,13 @@ export const Modal: FC<TModal> = ({ children, title = '' }) => {
         return () => window.removeEventListener('keydown', closeModalByEscape)
     }, [])
 
-    const clearModal = () => {
-        if (title !== '') {
-            dispatch({ type: DELETE_MODAL_ITEM });
-        }
-        else {
-            dispatch({ type: DELETE_ORDER_ITEM })
-        }
-    }
 
     return ReactDOM.createPortal(
         <>
             <ModalOverlay closeModal={closeModal} />
-            <div className={modalStyles.modal}>
+            <div className={modalStyles.modal} id="modal_form">
                 <section>
-                    <div className={modalStyles.closeButton}>
+                    <div className={modalStyles.closeButton} id="divCloseModalWindow">
                         <CloseIcon type="primary" onClick={() => closeModal()} />
                     </div>
                     {

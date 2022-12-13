@@ -42,7 +42,10 @@ function BurgerConstructor() {
                     if (firstIngredient.length > 0) {
                         dispatch({
                             type: DELETE_BUN_ITEM,
-                            item: item
+                            payload: {
+                                item: firstIngredient[0].item,
+                                uid: uuidv4()
+                            }
                         })
                         dispatch({
                             type: ADD_BUN_ITEM,
@@ -109,7 +112,7 @@ function BurgerConstructor() {
 
     return (
         <section>
-            <section className={`${isHover ? constructorStyles.onHover : ''} ${constructorStyles.rightColumn}`} ref={dropTargerRef}>
+            <section className={`${isHover ? constructorStyles.onHover : ''} ${constructorStyles.rightColumn}`} ref={dropTargerRef} id="constructorToDrop">
                 <section>
                     <div className={constructorStyles.borderItems}>
                         {firstIngredient && firstIngredient.length > 0 &&
@@ -152,14 +155,14 @@ function BurgerConstructor() {
                         <CurrencyIcon type="primary" />
                     </div>
 
-                    <Button type="primary" size="large" htmlType={'button'} onClick={orderClick}>
+                    <Button type="primary" id="btnCreateOrder" size="large" htmlType={'button'} onClick={orderClick}>
                         Оформить заказ
                     </Button>
                 </section>
 
             </section >
             {openModal && order.order.order &&
-                <Modal>
+                <Modal setActive={setModal}>
                     <OrderDetails />
                 </Modal>
             }

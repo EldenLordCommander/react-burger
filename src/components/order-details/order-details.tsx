@@ -2,8 +2,17 @@ import orderStyle from './order-details.module.css';
 import checkImage from '../../images/done.png'
 import { useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { useEffect } from 'react';
+import { DELETE_ORDER_ITEM } from '../../services/actions/order-action';
 
 function OrderDetails() {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch({ type: DELETE_ORDER_ITEM })
+        }
+    }, [])
 
     const newOrder = useAppSelector((store) => store.order.order.order);
 

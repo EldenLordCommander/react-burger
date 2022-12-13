@@ -15,6 +15,7 @@ export interface IAddBunItemAction {
   }
   export interface IDeleteBunAction {
     readonly type: typeof DELETE_BUN_ITEM;
+    readonly payload: TConstrunctorItem;
   }
   export interface IAddComponentItemAction {
     readonly type: typeof ADD_COMPONENT_ITEM;
@@ -44,8 +45,9 @@ export type TConstructorActions =
     payload
   });
   
-  export const deleteBunItem = (): IDeleteBunAction => ({
-    type: DELETE_BUN_ITEM
+  export const deleteBunItem = (payload: TConstrunctorItem): IDeleteBunAction => ({
+    type: DELETE_BUN_ITEM,
+    payload
   }); 
 
   export const addComponentItem = (payload: TConstrunctorItem): IAddComponentItemAction => ({

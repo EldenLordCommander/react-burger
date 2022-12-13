@@ -1,6 +1,7 @@
 import { TMainForm, TRegisterForm, TResetForm } from "./types";
 
 export const wsUrlAll = 'wss://norma.nomoreparties.space/orders/all';
+export const wsUrl = 'wss://norma.nomoreparties.space/orders';
 export const wsUrlUser = `wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`;
 
 const BASE_API_URL = 'https://norma.nomoreparties.space/api';
@@ -156,7 +157,7 @@ export const login = (form : TMainForm) => {
     })
         .then(checkResponse)
         .then((result) => {
-            console.log(result);
+            //console.log(result);
             if (result.success) {
                 let accessToken = result.accessToken.split('Bearer ')[1]
                 if (accessToken) {
@@ -215,6 +216,7 @@ export const refreshTokenRequest = () => {
 
 export const fetchWithRefresh = async () => {
     try {
+        //console.log(getCookie('accessToken'));
         const res = await fetch(USER_URL, {
             method: 'GET',
             headers: {
@@ -223,6 +225,7 @@ export const fetchWithRefresh = async () => {
             }
         });
         return await checkUserResponse(res);
+        
     } catch (err: any) {
         if (err.message === 'jwt expired') {
             const { refreshToken, accessToken } = await refreshTokenRequest();

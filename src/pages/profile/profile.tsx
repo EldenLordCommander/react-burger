@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FormEvent } from 'react';
 import styles from './profile.module.css';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useHistory, Redirect } from "react-router-dom";
@@ -35,6 +35,11 @@ export function ProfilePage() {
         dispatch(getUserWithRefresh());
     }
 
+    function onSubmit(e: FormEvent) {
+        e.preventDefault();
+        saveNewInfo();
+    }
+
     function logoutClick()
     {
         dispatch(logoutUser());
@@ -52,7 +57,7 @@ export function ProfilePage() {
 
     return (
         <>
-            <div className={styles.form}>
+            <form className={styles.form} action="submit" onSubmit={onSubmit}>
                 <div className={styles.sideMenu}>
                     <div className={styles.row}>
                         <p className="text text_type_main-large">
@@ -122,14 +127,14 @@ export function ProfilePage() {
                                 Отмена
                             </p>
                             &nbsp;
-                            <Button htmlType={'button'} onClick={(e) => { saveNewInfo() }} >
+                            <Button htmlType={'submit'} >
                                 Сохранить
                             </Button>
                         </section>
 
                     </div>
                 </div>
-            </div>
+            </form>
         </>
 
     )

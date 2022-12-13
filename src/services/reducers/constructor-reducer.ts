@@ -56,7 +56,7 @@ export const constructorReducer = (state = initialState, action: TConstructorAct
                     ...state.dataConstructor,
                     bun: [],
                 },
-                total: state.total - state.dataConstructor.bun[0].item.price * 2
+                total: state.total - action.payload.item.price * 2
             }
         }
 

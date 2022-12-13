@@ -4,10 +4,18 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getData } from '../../services/actions/ingredients-actions';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { DELETE_MODAL_ITEM } from '../../services/actions/modal-actions';
 
 function IngredientDetails() {
     const { ingredientId } = useParams<{ingredientId : string}>();
-    
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch({ type: DELETE_MODAL_ITEM })
+        }
+    }, [])
+
     const item = useAppSelector((store) => store.ingredient.data
         .filter((e) => e._id === ingredientId))[0];
 

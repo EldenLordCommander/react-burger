@@ -9,6 +9,7 @@
     justify-content: center;
     position: relative;
     cursor: pointer;
+    color: aliceblue;
 }
 
 .priceBlock{

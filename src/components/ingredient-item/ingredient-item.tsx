@@ -36,7 +36,7 @@ export const IngredientItem: FC<{item: TIngredientType}> = ({ item }) => {
                     state: { background: location },
                   }}
             >
-                <div className={ingredientStyle.ingredient} key={item._id} ref={dndRef} style={{ opacity }}>
+                <div className={ingredientStyle.ingredient} id={item._id} key={item._id} ref={dndRef} style={{ opacity }}>
                     {counter !== 0 &&
                         <Counter count={counter} size="default" />
                     }
